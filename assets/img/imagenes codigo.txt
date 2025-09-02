@@ -1,0 +1,5 @@
+assets/img/portada.jpg
+assets/img/ceremonia.jpg
+assets/img/recepcion.jpg
+assets/audio/musica.mp3
+assets/audio/mensaje.mp3
