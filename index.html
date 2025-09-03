@@ -15,30 +15,22 @@
 
   <style>
     :root{
-      /* 🎨 Colores y assets */
-      --primary:#c6a664;     /* dorado suave */
+      --primary:#c6a664;     
       --primary-2:#a9904f;
       --text:#1f1f1f;
       --muted:#6b6b6b;
-      --card:#ffffffEE;      /* tarjetas translúcidas */
-      --bg-color:#f6edf1;    /* base rosada */
+      --card:#ffffffEE;      
+      --bg-color:#f6edf1;    
       --shadow: 0 8px 24px rgba(0,0,0,.12);
       --radius: 20px;
 
-      /* Textura ROSA suave por defecto (no depende de tus imágenes) */
-      --texture: radial-gradient(60vw 60vw at -10% -10%, #fdf6f9 0 30%, transparent 32%) ,
-                 radial-gradient(50vw 50vw at 120% -20%, #f7e7ee 0 35%, transparent 37%) ,
+      --texture: radial-gradient(60vw 60vw at -10% -10%, #fdf6f9 0 30%, transparent 32%),
+                 radial-gradient(50vw 50vw at 120% -20%, #f7e7ee 0 35%, transparent 37%),
                  radial-gradient(40vw 40vw at 50% 120%, #f3dbe6 0 28%, transparent 30%);
 
-      /* Si quieres además una foto de fondo a pantalla completa, ponla aquí: */
-      --bg-image: url("./assets/img/portada.jpg");  /* ← Cambia o borra esta línea si no quieres foto */
-      --bg-blend: soft-light; /* cómo se mezcla la textura con tu foto */
-
-      /* Imagen del hero (respaldo si la <img> falla) */
+      --bg-image: url("./assets/img/portada.jpg");
+      --bg-blend: soft-light;
       --hero-image: url("./assets/img/portada.jpg");
-
-      /* 📨 Imagen del SOBRE de bienvenida (cubre toda la pantalla) */
-      --gate-image: url('./assets/img/sobre.jpg'); /* ⬅️ PON AQUÍ tu imagen de sobre */
     }
 
     *{box-sizing:border-box}
@@ -57,49 +49,10 @@
       background-attachment: scroll;
       overflow-x:hidden;
     }
-    body.lock{ overflow:hidden; } /* bloquea scroll mientras el sobre está visible */
-    @media (min-width:700px){
-      body{ background-attachment: scroll; }
-    }
 
     .wrap{ width:100%; max-width:720px; margin-inline:auto; padding-inline:16px; }
     .card{ background:var(--card); backdrop-filter: blur(8px); border-radius:var(--radius); box-shadow:var(--shadow); }
 
-    /* 📨 SOBRE (overlay de bienvenida) ------------------------------------ */
-    #gate{
-      position:fixed; inset:0; z-index:9999;
-      display:grid; place-items:center;
-      background: #e9e6e2;
-      transition: opacity .7s ease, transform .7s ease;
-      /* Si tienes una sola imagen del sobre, úsala de fondo: */
-      background-image: var(--gate-image);
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 0 0 100vmax rgba(0,0,0,.08) inset;
-    }
-    #gate .seal{
-      display:inline-grid; place-items:center;
-      width:100px; height:100px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, #e7cf86, #b48f3f 70%, #9b7a2f);
-      color:#5b4720;
-      font-family:'Playfair Display', serif;
-      font-weight:700; letter-spacing:.03em;
-      box-shadow: 0 8px 18px rgba(0,0,0,.25), inset 0 2px 4px rgba(255,255,255,.35);
-      border:1px solid rgba(92,72,28,.35);
-      cursor:pointer; user-select:none;
-      transform: scale(1); transition: transform .15s ease;
-    }
-    #gate .seal:active{ transform: scale(.96); }
-    #gate .seal span{ font-size:18px }
-    #gate .hint{
-      margin-top:12px; font-size:13px; color:#6e6e6e; background:#ffffffb3;
-      padding:6px 10px; border-radius:999px;
-      backdrop-filter: blur(6px);
-    }
-    /* animación al abrir */
-    #gate.open{ opacity:0; transform: translateY(-6%); pointer-events:none; }
-
-    /* HERO --------------------------------------------------------------- */
     .hero{
       position:relative; overflow:hidden; border-radius:0 0 32px 32px;
       min-height: 64vh;
@@ -121,22 +74,18 @@
     .monogram .small{font:600 14px/1 'Poppins',sans-serif; letter-spacing:.2em}
     .monogram .big{font:400 46px/1 'Great Vibes', cursive}
 
-    /* Cuenta regresiva */
     .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 24px; color:#fff; font-weight:600; }
     .countdown .item{ flex:1; text-align:center; background:rgba(0,0,0,.4); border-radius:14px; padding:10px 6px; }
     .countdown .num{ font-size:24px; display:block; }
     .countdown .lbl{ font-size:12px; opacity:.9; letter-spacing:.03em }
 
-    /* Secciones */
     section{ padding:28px 0; }
     h2{ font-family:'Playfair Display', serif; font-weight:700; font-size:28px; margin:0 0 8px; text-align:center; }
     .subtitle{ text-align:center; color:var(--muted); margin-bottom:18px; }
     .intro{ text-align:center; padding:20px; }
     .script{ font-family:'Great Vibes', cursive; font-size:36px; color:var(--primary-2); }
 
-    /* Dónde & Cuándo */
     .grid{ display:grid; gap:18px; }
-    .place{ overflow:hidden; }
     .place img{ width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:14px; }
     .place h3{ margin:12px 0 6px; font-family:'Playfair Display',serif; }
     .meta{ color:var(--muted); font-size:14px; }
@@ -144,22 +93,18 @@
     .btn{ appearance:none; border:0; cursor:pointer; padding:10px 14px; border-radius:12px; background:var(--primary); color:#fff; font-weight:600; box-shadow:var(--shadow); text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
     .btn.ghost{ background:transparent; color:var(--primary); border:2px solid var(--primary) }
 
-    /* Galería */
     .carousel{ position:relative; }
     .track{ display:flex; overflow:auto; scroll-snap-type:x mandatory; gap:10px; padding-bottom:8px; }
     .track img{ width:100%; flex:0 0 100%; scroll-snap-align:center; border-radius:18px; aspect-ratio: 3/4; object-fit:cover; }
     .nav{ position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
     .nav button{ pointer-events:auto; border:none; background:rgba(0,0,0,.5); color:#fff; width:42px; height:42px; border-radius:50%; display:grid; place-items:center; }
 
-    /* RSVP */
     .rsvp small{ color:var(--muted); }
     .field{ display:flex; gap:8px; margin:10px 0; }
     .field input, .field select{ flex:1; padding:12px 12px; border-radius:12px; border:1.5px solid #ddd; background:#fff; font:inherit; }
 
-    /* Botón de música flotante */
     .music{ position:fixed; right:14px; bottom:16px; z-index:50; }
 
-    /* Animaciones */
     .aos{ opacity:0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
     .aos.show{ opacity:1; transform:none }
 
@@ -172,22 +117,14 @@
     }
   </style>
 </head>
-<body class="lock">
-  <!-- 📨 SOBRE / GATE -->
-  <div id="gate" role="dialog" aria-label="Sobre de invitación" aria-modal="true">
-    <!-- Si tienes un PNG del sello, puedes reemplazar este botón por <img class="seal" src="..."> -->
-    <button class="seal" id="openGate" aria-label="Abrir invitación"><span>Abrir</span></button>
-    <div class="hint">Toca el sello para abrir</div>
-  </div>
-
+<body>
   <!-- AUDIO -->
-  <audio id="bgMusic" src="" loop preload="none"></audio> <!-- ./assets/audio/musica.mp3 -->
-  <audio id="voiceNote" src="" preload="none"></audio>   <!-- ./assets/audio/mensaje.mp3 -->
+  <audio id="bgMusic" src="./assets/audio/musica.mp3" loop preload="auto"></audio>
+  <audio id="voiceNote" src="./assets/audio/mensaje.mp3" preload="auto"></audio>
 
-  <main class="wrap" id="app" data-event-datetime="2025-11-15T18:00">
+  <main class="wrap" id="app" data-event-datetime="2025-11-30T20:00">
     <!-- HERO -->
     <header class="hero">
-      <!-- Si esta imagen no carga, el hero usará --hero-image como fondo -->
       <img class="portrait" src="./assets/img/portada.jpg" alt="Retrato de la quinceañera" onerror="this.style.display='none'"/>
       <div class="monogram" aria-label="Monograma">
         <div>
@@ -207,7 +144,7 @@
     <section class="card intro aos">
       <h2>¡Te invito a mis XV!</h2>
       <p>Hay momentos en la vida que siempre vamos a recordar. Me encantará compartir este día contigo.</p>
-      <p class="script">Brenda Darani</p>
+      <p class="script">Escobar</p>
       <div class="btns" style="justify-content:center; margin-top:10px;">
         <button class="btn ghost" id="btnVoice"><i class="bi bi-mic-fill"></i> Escuchar invitación</button>
       </div>
@@ -220,29 +157,29 @@
       <div class="grid">
         <!-- CEREMONIA -->
         <article class="card place">
-          <img src="./assets/img/ceremonia.jpg" alt="Foto del lugar de la ceremonia" loading="lazy" onerror="this.style.display='none'">
+          <img src="./assets/img/ceremonia.png" alt="Foto del lugar de la ceremonia" loading="lazy">
           <div style="padding:12px 14px 16px;">
-            <h3>Catedral de Guadalajara</h3>
-            <div class="meta">Sábado 30 de agosto, 6:00 pm</div>
+            <h3>Iglesia Retalhuleu</h3>
+            <div class="meta">Sábado 30 de Noviembre, 6:00 pm</div>
             <div class="divider"></div>
-            <div class="meta"><strong>Dirección:</strong> Av. Fray Antonio Alcalde 10, Zona Centro, Guadalajara</div>
+            <div class="meta"><strong>Dirección:</strong> Parque central de Retalhuleu</div>
             <div class="btns">
-              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.google.com/?q=Catedral+de+Guadalajara"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
-              <button class="btn addcal" data-title="Misa de XV" data-location="Catedral de Guadalajara" data-duration="PT60M"><i class="bi bi-calendar-plus"></i> Agendar</button>
+              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Eoam4KMmS7f39aFc7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
+              <button class="btn addcal" data-title="Misa de XV" data-location="Parque central de Retalhuleu" data-duration="PT60M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
           </div>
         </article>
         <!-- RECEPCIÓN -->
         <article class="card place">
-          <img src="./assets/img/recepcion.jpg" alt="Foto del salón de la recepción" loading="lazy" onerror="this.style.display='none'">
+          <img src="./assets/img/recepcion.png" alt="Foto del salón de la recepción" loading="lazy">
           <div style="padding:12px 14px 16px;">
             <h3>Hacienda de los Morales</h3>
-            <div class="meta">Sábado 30 de agosto, 8:00 pm</div>
+            <div class="meta">Sábado 30 de Noviembre, 8:00 pm</div>
             <div class="divider"></div>
-            <div class="meta"><strong>Dirección:</strong> Polanco, CDMX, México</div>
+            <div class="meta"><strong>Dirección:</strong> Nuevo San Carlos, Retalhuleu</div>
             <div class="btns">
-              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.google.com/?q=Hacienda+de+los+Morales"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
-              <button class="btn addcal" data-title="Recepción XV" data-location="Hacienda de los Morales" data-duration="PT240M"><i class="bi bi-calendar-plus"></i> Agendar</button>
+              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/LD3e3BwVnUL5L77y8"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
+              <button class="btn addcal" data-title="Recepción XV" data-location="Hacienda de los Morales, Nuevo San Carlos" data-duration="PT240M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
           </div>
         </article>
@@ -255,10 +192,10 @@
       <p class="subtitle">Desliza para ver la galería</p>
       <div class="card carousel">
         <div class="track" id="track">
-          <img src="./assets/img/portada.jpg"   alt="Foto 1" loading="lazy" onerror="this.style.display='none'">
-          <img src="./assets/img/ceremonia.jpg" alt="Foto 2" loading="lazy" onerror="this.style.display='none'">
-          <img src="./assets/img/recepcion.jpg" alt="Foto 3" loading="lazy" onerror="this.style.display='none'">
-          <img src="./assets/img/portada.jpg"   alt="Foto 4" loading="lazy" onerror="this.style.display='none'">
+          <img src="./assets/img/portada.jpg" alt="Foto 1">
+          <img src="./assets/img/foto1.jpg"  alt="Foto 2">
+          <img src="./assets/img/foto2.jpg"  alt="Foto 3">
+          <img src="./assets/img/recepcion.png" alt="Foto 4">
         </div>
         <div class="nav" aria-hidden="true">
           <button id="prev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
@@ -271,7 +208,9 @@
     <section class="aos card rsvp" style="padding:16px 16px 18px;">
       <h2>Confirmar asistencia</h2>
       <p class="subtitle">Por favor confirma tu asistencia un mes antes del evento. ¡Gracias!</p>
-      <form id="rsvpForm" data-whatsapp="5215555555555">
+
+      <!-- Número sin + ni espacios; si requiere prefijo usa ej. 50254389207 -->
+      <form id="rsvpForm" data-whatsapp="54389207">
         <div class="field"><input required type="text" name="nombre" placeholder="Tu nombre completo" autocomplete="name"></div>
         <div class="field">
           <select name="acompanantes" aria-label="Acompañantes">
@@ -282,53 +221,40 @@
           </select>
         </div>
         <div class="btns">
-          <button type="submit" class="btn"><i class="bi bi-whatsapp"></i> Confirmar por WhatsApp</button>
-          <button type="button" id="editRSVP" class="btn ghost"><i class="bi bi-pencil"></i> Modificar</button>
+          <button type="submit" class="btn" id="btnWA"><i class="bi bi-whatsapp"></i> Confirmar por WhatsApp</button>
         </div>
-        <small>También puedes llamar a <a href="tel:+525155555555">55 5555 5555</a>.</small>
+        <small>También puedes llamar a
+          <a href="tel:+54389207">54 38 92 07</a>.
+        </small>
       </form>
     </section>
 
     <section class="aos" style="text-align:center; color:var(--muted); padding-bottom:56px;">
       <p>Con cariño,</p>
-      <p class="script" style="margin-top:-6px">Brenda</p>
+      <p class="script" style="margin-top:-6px">Escobar</p>
     </section>
   </main>
 
   <!-- Botón flotante música -->
   <div class="music">
-    <button class="btn" id="musicToggle" aria-pressed="false" aria-label="Reproducir música"><i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span></button>
+    <button class="btn" id="musicToggle" aria-pressed="false" aria-label="Reproducir música">
+      <i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>
+    </button>
   </div>
 
   <script>
-    const $ = (s, el=document)=> el.querySelector(s);
-    const $$= (s, el=document)=> [...el.querySelectorAll(s)];
-
-    // 📨 Abrir sobre
-    (function(){
-      const gate = $('#gate');
-      const btn  = $('#openGate');
-      const musicBtn = $('#musicToggle');
-      btn.addEventListener('click', ()=>{
-        gate.classList.add('open');
-        document.body.classList.remove('lock');   // vuelve a permitir scroll
-        // Si ya cargaste música de fondo, puedes iniciar aquí:
-        // $('#bgMusic')?.play().catch(()=>{});   // (algunos navegadores requieren interacción; ya hubo click)
-        setTimeout(()=> gate.remove(), 800);      // limpia el DOM tras la animación
-      });
-      // Accesibilidad: también con Enter/Espacio
-      btn.addEventListener('keydown', (e)=>{
-        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); }
-      });
-    })();
+    const $  = (s, el=document)=> el.querySelector(s);
+    const $$ = (s, el=document)=> [...el.querySelectorAll(s)];
 
     // Animaciones on-scroll
-    const io = new IntersectionObserver(ents=>{ ents.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); }); }, {threshold:.15});
+    const io = new IntersectionObserver(ents=>{
+      ents.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    }, {threshold:.15});
     $$('.aos').forEach(el=> io.observe(el));
 
     // Countdown
     (function(){
-      const root = document.getElementById('app');
+      const root = $('#app');
       const dtStr = root.getAttribute('data-event-datetime');
       if(!dtStr) return;
       const eventDate = new Date(dtStr);
@@ -341,76 +267,100 @@
         const h = Math.floor((diff / (1000*60*60)) % 24);
         const m = Math.floor((diff / (1000*60)) % 60);
         const s = Math.floor((diff / 1000) % 60);
-        $('#d').textContent = pad(d); $('#h').textContent = pad(h); $('#m').textContent = pad(m); $('#s').textContent = pad(s);
+        $('#d').textContent = pad(d);
+        $('#h').textContent = pad(h);
+        $('#m').textContent = pad(m);
+        $('#s').textContent = pad(s);
       }
       tick(); setInterval(tick,1000);
     })();
 
     // Carrusel
     (function(){
-      const track = document.getElementById('track');
-      const prev  = document.getElementById('prev');
-      const next  = document.getElementById('next');
-      if(!track) return;
-      prev?.addEventListener('click', ()=> track.scrollBy({left:-track.clientWidth, behavior:'smooth'}));
-      next?.addEventListener('click', ()=> track.scrollBy({left: track.clientWidth, behavior:'smooth'}));
+      const track = $('#track');
+      $('#prev')?.addEventListener('click', ()=> track.scrollBy({left:-track.clientWidth, behavior:'smooth'}));
+      $('#next')?.addEventListener('click', ()=> track.scrollBy({left: track.clientWidth, behavior:'smooth'}));
     })();
 
-    // Música
-    const bgMusic    = document.getElementById('bgMusic');
-    const musicBtn   = document.getElementById('musicToggle');
-    let musicPlaying = false;
-    function toggleMusic(){
-      if(!bgMusic.src){ alert('Agrega una pista en el <audio id="bgMusic">'); return; }
-      if(musicPlaying){ bgMusic.pause(); musicPlaying=false; musicBtn.setAttribute('aria-pressed','false'); musicBtn.innerHTML='<i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>'; }
-      else { bgMusic.play(); musicPlaying=true; musicBtn.setAttribute('aria-pressed','true'); musicBtn.innerHTML='<i class="bi bi-pause-fill"></i><span style="margin-left:6px">Pausar</span>'; }
-    }
-    musicBtn.addEventListener('click', toggleMusic);
-    window.addEventListener('keydown', e=>{ if(e.key.toLowerCase()==='m') toggleMusic(); });
+    // Música (toggle)
+    (function(){
+      const bgMusic = $('#bgMusic');
+      const musicBtn = $('#musicToggle');
+      let musicPlaying = false;
+
+      async function toggleMusic(){
+        if(!bgMusic.src){ alert('Agrega una pista en ./assets/audio/musica.mp3'); return; }
+        try{
+          if(musicPlaying){
+            bgMusic.pause(); musicPlaying=false;
+            musicBtn.setAttribute('aria-pressed','false');
+            musicBtn.innerHTML='<i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>';
+          }else{
+            await bgMusic.play(); musicPlaying=true;
+            musicBtn.setAttribute('aria-pressed','true');
+            musicBtn.innerHTML='<i class="bi bi-pause-fill"></i><span style="margin-left:6px">Pausar</span>';
+          }
+        }catch(e){}
+      }
+      musicBtn.addEventListener('click', toggleMusic);
+    })();
 
     // Mensaje de voz
-    const voiceBtn  = document.getElementById('btnVoice');
-    const voiceNote = document.getElementById('voiceNote');
-    let voicePlaying=false;
-    voiceBtn.addEventListener('click', ()=>{
-      if(!voiceNote.src){ alert('Agrega un audio en el <audio id="voiceNote">'); return; }
-      if(voicePlaying){ voiceNote.pause(); voiceNote.currentTime=0; voicePlaying=false; voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; }
-      else { voiceNote.play(); voicePlaying=true; voiceBtn.innerHTML='<i class="bi bi-stop-fill"></i> Detener audio'; }
-    });
-    voiceNote.addEventListener('ended', ()=>{ voicePlaying=false; voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; });
+    (function(){
+      const voiceBtn  = $('#btnVoice');
+      const voiceNote = $('#voiceNote');
+      let voicePlaying=false;
+      voiceBtn.addEventListener('click', ()=>{
+        if(!voiceNote.src){ alert('Agrega un audio en ./assets/audio/mensaje.mp3'); return; }
+        if(voicePlaying){ voiceNote.pause(); voiceNote.currentTime=0; voicePlaying=false; voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; }
+        else { voiceNote.play(); voicePlaying=true; voiceBtn.innerHTML='<i class="bi bi-stop-fill"></i> Detener audio'; }
+      });
+      voiceNote.addEventListener('ended', ()=>{ voicePlaying=false; voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; });
+    })();
 
     // RSVP WhatsApp
-    const rsvp = document.getElementById('rsvpForm');
-    rsvp?.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const nombre = rsvp.nombre.value.trim();
-      const acomp  = rsvp.acompanantes.value;
-      const dtStr  = document.getElementById('app').getAttribute('data-event-datetime');
-      const fecha  = new Date(dtStr).toLocaleString('es-MX',{ dateStyle:'full', timeStyle:'short' });
-      const msg    = `Hola, soy ${nombre}. Confirmo asistencia a los XV el ${fecha}. Acompañantes: ${acom}.`;
-      const phone  = rsvp.getAttribute('data-whatsapp') || '5215555555555';
-      const url    = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
-    });
-    document.getElementById('editRSVP').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+    (function(){
+      const rsvp = $('#rsvpForm');
+      rsvp?.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        const phone = rsvp.getAttribute('data-whatsapp')?.trim();
+        if(!/^\d{8,15}$/.test(phone||'')){
+          alert('Número de WhatsApp inválido. Usa formato internacional sin + ni espacios si es necesario.');
+          return;
+        }
+
+        const nombre = rsvp.nombre.value.trim();
+        if(!nombre){ alert('Por favor escribe tu nombre.'); return; }
+
+        const acomp  = rsvp.acompanantes.value;
+        const dtStr  = $('#app').getAttribute('data-event-datetime');
+        const fecha  = new Date(dtStr).toLocaleString('es-MX',{ dateStyle:'full', timeStyle:'short' });
+        const msg    = `Hola, soy ${nombre}. Confirmo asistencia a los XV el ${fecha}. Acompañantes: ${acomp}.`;
+        const url    = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+      });
+    })();
 
     // Agregar a calendario (.ics)
-    function addMinutes(date, m){ const d=new Date(date); d.setMinutes(d.getMinutes()+m); return d; }
-    function formatICS(dt){ const p=n=>String(n).padStart(2,'0'); return `${dt.getUTCFullYear()}${p(dt.getUTCMonth()+1)}${p(dt.getUTCDate())}T${p(dt.getUTCHours())}${p(dt.getUTCMinutes())}${p(dt.getUTCSeconds())}Z`; }
-    function downloadICS({title, description, location, start, durationMinutes=120}){
-      const st=new Date(start); const en=addMinutes(st,durationMinutes);
-      const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Creative Studio//Invitacion//ES\nBEGIN:VEVENT\nUID:${Date.now()}@creativestudio\nDTSTAMP:${formatICS(new Date())}\nDTSTART:${formatICS(st)}\nDTEND:${formatICS(en)}\nSUMMARY:${title}\nDESCRIPTION:${description}\nLOCATION:${location}\nEND:VEVENT\nEND:VCALENDAR`;
-      const blob=new Blob([ics],{type:'text/calendar'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${title.replace(/\s+/g,'_')}.ics`; a.click(); URL.revokeObjectURL(a.href);
-    }
-    $$('.addcal').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const title=btn.dataset.title||'Evento';
-        const place=btn.dataset.location||'';
-        const mins = Number(/PT(\d+)M/.exec(btn.dataset.duration||'PT120M')?.[1]||120);
-        const start=document.getElementById('app').getAttribute('data-event-datetime');
-        downloadICS({title, description:'Te esperamos ❤', location:place, start, durationMinutes:mins});
+    (function(){
+      function addMinutes(date, m){ const d=new Date(date); d.setMinutes(d.getMinutes()+m); return d; }
+      function formatICS(dt){ const p=n=>String(n).padStart(2,'0'); return `${dt.getUTCFullYear()}${p(dt.getUTCMonth()+1)}${p(dt.getUTCDate())}T${p(dt.getUTCHours())}${p(dt.getUTCMinutes())}${p(dt.getUTCSeconds())}Z`; }
+      function downloadICS({title, description, location, start, durationMinutes=120}){
+        const st=new Date(start); const en=addMinutes(st,durationMinutes);
+        const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Creative Studio//Invitacion//ES\nBEGIN:VEVENT\nUID:${Date.now()}@creativestudio\nDTSTAMP:${formatICS(new Date())}\nDTSTART:${formatICS(st)}\nDTEND:${formatICS(en)}\nSUMMARY:${title}\nDESCRIPTION:${description}\nLOCATION:${location}\nEND:VEVENT\nEND:VCALENDAR`;
+        const blob=new Blob([ics],{type:'text/calendar'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${title.replace(/\s+/g,'_')}.ics`; a.click(); URL.revokeObjectURL(a.href);
+      }
+      $$('.addcal').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const title=btn.dataset.title||'Evento';
+          const place=btn.dataset.location||'';
+          const mins = Number(/PT(\d+)M/.exec(btn.dataset.duration||'PT120M')?.[1]||120);
+          const start=$('#app').getAttribute('data-event-datetime');
+          downloadICS({title, description:'Te esperamos ❤', location:place, start, durationMinutes:mins});
+        });
       });
-    });
+    })();
   </script>
 </body>
 </html>
