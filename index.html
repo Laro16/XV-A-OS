@@ -6,32 +6,39 @@
   <title>Invitación XV — Plantilla Responsive</title>
   <meta name="description" content="Invitación elegante optimizada para celular con cuenta regresiva, galería, mapa, RSVP por WhatsApp y audio.">
 
-  <!-- Tipografías & Iconos -->
+  <!-- Tipografías -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- Íconos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
   <style>
     :root{
-      --primary:#c6a664; --primary-2:#a9904f;
-      --text:#1f1f1f; --muted:#6b6b6b;
-      --card:#ffffffEE; --bg-color:#f6edf1;
+      /* 🎨 Colores y assets */
+      --primary:#c6a664;     /* dorado suave */
+      --primary-2:#a9904f;
+      --text:#1f1f1f;
+      --muted:#6b6b6b;
+      --card:#ffffffEE;      /* tarjetas translúcidas */
+      --bg-color:#f6edf1;    /* base rosada */
       --shadow: 0 8px 24px rgba(0,0,0,.12);
       --radius: 20px;
 
-      /* Textura + foto (opcional) */
+      /* Textura ROSA suave por defecto (no depende de tus imágenes) */
       --texture: radial-gradient(60vw 60vw at -10% -10%, #fdf6f9 0 30%, transparent 32%) ,
                  radial-gradient(50vw 50vw at 120% -20%, #f7e7ee 0 35%, transparent 37%) ,
                  radial-gradient(40vw 40vw at 50% 120%, #f3dbe6 0 28%, transparent 30%);
-      --bg-image: url("./assets/img/portada.jpg");
-      --bg-blend: soft-light;
 
-      /* Hero fallback */
+      /* Si quieres además una foto de fondo a pantalla completa, ponla aquí: */
+      --bg-image: url("./assets/img/portada.jpg");  /* ← Cambia o borra esta línea si no quieres foto */
+      --bg-blend: soft-light; /* cómo se mezcla la textura con tu foto */
+
+      /* Imagen del hero (respaldo si la <img> falla) */
       --hero-image: url("./assets/img/portada.jpg");
 
-      /* Imagen del SOBRE pantalla inicial */
-      --gate-image: url('./assets/img/sobre.jpg'); /* ← pon tu imagen del sobre aquí */
+      /* 📨 Imagen del SOBRE de bienvenida (cubre toda la pantalla) */
+      --gate-image: url('./assets/img/sobre.jpg'); /* ⬅️ PON AQUÍ tu imagen de sobre */
     }
 
     *{box-sizing:border-box}
@@ -47,50 +54,58 @@
       background-size: cover, cover;
       background-position:center top, center top;
       background-blend-mode: normal, var(--bg-blend);
+      background-attachment: scroll;
       overflow-x:hidden;
     }
-    body.lock{ overflow:hidden } /* bloquea scroll mientras está el sobre */
+    body.lock{ overflow:hidden; } /* bloquea scroll mientras el sobre está visible */
+    @media (min-width:700px){
+      body{ background-attachment: scroll; }
+    }
 
     .wrap{ width:100%; max-width:720px; margin-inline:auto; padding-inline:16px; }
     .card{ background:var(--card); backdrop-filter: blur(8px); border-radius:var(--radius); box-shadow:var(--shadow); }
 
-    /* 📨 SOBRE (overlay) */
+    /* 📨 SOBRE (overlay de bienvenida) ------------------------------------ */
     #gate{
       position:fixed; inset:0; z-index:9999;
       display:grid; place-items:center;
-      background-image: var(--gate-image);
-      background-size: cover; background-position: center;
-      box-shadow: 0 0 0 100vmax rgba(0,0,0,.12) inset;
-      animation: gateIn .6s ease both;
+      background: #e9e6e2;
       transition: opacity .7s ease, transform .7s ease;
+      /* Si tienes una sola imagen del sobre, úsala de fondo: */
+      background-image: var(--gate-image);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 0 0 100vmax rgba(0,0,0,.08) inset;
     }
-    @keyframes gateIn{
-      from{ opacity:0; transform:scale(1.03) }
-      to  { opacity:1; transform:scale(1) }
-    }
-    #gate.open{ opacity:0; transform: scale(1.05); pointer-events:none; }
-
     #gate .seal{
       display:inline-grid; place-items:center;
-      width:110px; height:110px; border-radius:50%;
+      width:100px; height:100px; border-radius:50%;
       background: radial-gradient(circle at 30% 30%, #e7cf86, #b48f3f 70%, #9b7a2f);
-      color:#5b4720; font-family:'Playfair Display', serif; font-weight:700;
+      color:#5b4720;
+      font-family:'Playfair Display', serif;
+      font-weight:700; letter-spacing:.03em;
       box-shadow: 0 8px 18px rgba(0,0,0,.25), inset 0 2px 4px rgba(255,255,255,.35);
       border:1px solid rgba(92,72,28,.35);
       cursor:pointer; user-select:none;
       transform: scale(1); transition: transform .15s ease;
     }
     #gate .seal:active{ transform: scale(.96); }
+    #gate .seal span{ font-size:18px }
     #gate .hint{
       margin-top:12px; font-size:13px; color:#6e6e6e; background:#ffffffb3;
-      padding:6px 10px; border-radius:999px; backdrop-filter: blur(6px);
+      padding:6px 10px; border-radius:999px;
+      backdrop-filter: blur(6px);
     }
+    /* animación al abrir */
+    #gate.open{ opacity:0; transform: translateY(-6%); pointer-events:none; }
 
-    /* HERO */
+    /* HERO --------------------------------------------------------------- */
     .hero{
       position:relative; overflow:hidden; border-radius:0 0 32px 32px;
-      min-height: 64vh; display:flex; align-items:flex-end;
-      background-image: var(--hero-image); background-size: cover; background-position: center;
+      min-height: 64vh;
+      display:flex; align-items:flex-end;
+      background-image: var(--hero-image);
+      background-size: cover; background-position: center;
     }
     .hero .portrait{
       position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
@@ -121,6 +136,7 @@
 
     /* Dónde & Cuándo */
     .grid{ display:grid; gap:18px; }
+    .place{ overflow:hidden; }
     .place img{ width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:14px; }
     .place h3{ margin:12px 0 6px; font-family:'Playfair Display',serif; }
     .meta{ color:var(--muted); font-size:14px; }
@@ -143,44 +159,35 @@
     /* Botón de música flotante */
     .music{ position:fixed; right:14px; bottom:16px; z-index:50; }
 
-    /* Animaciones al hacer scroll */
+    /* Animaciones */
     .aos{ opacity:0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
     .aos.show{ opacity:1; transform:none }
 
     .divider{ height:1px; background:linear-gradient(to right, transparent, #00000020 15%, #00000020 85%, transparent); margin:8px 0 16px; }
 
-    /* ✨ Efecto chispas (para cualquier click) */
-    .spark{
-      position: fixed;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: #ffe07a; pointer-events: none;
-      box-shadow: 0 0 8px #fff, 0 0 16px #ffd28a;
-      animation: spark-pop .8s ease-out forwards;
-      z-index: 99999;
-    }
-    @keyframes spark-pop{
-      0%{ transform: translate(-50%,-50%) scale(0); opacity:1 }
-      70%{ transform: translate(-50%,-50%) scale(1) }
-      100%{ transform: translate(-50%,-50%) scale(0); opacity:0 }
+    @media(min-width:700px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .countdown .num{ font-size:28px }
+      .monogram{ width:220px; height:220px }
     }
   </style>
 </head>
-
 <body class="lock">
-  <!-- 📨 SOBRE -->
+  <!-- 📨 SOBRE / GATE -->
   <div id="gate" role="dialog" aria-label="Sobre de invitación" aria-modal="true">
+    <!-- Si tienes un PNG del sello, puedes reemplazar este botón por <img class="seal" src="..."> -->
     <button class="seal" id="openGate" aria-label="Abrir invitación"><span>Abrir</span></button>
     <div class="hint">Toca el sello para abrir</div>
   </div>
 
   <!-- AUDIO -->
-  <audio id="bgMusic" src="" loop preload="none"></audio> <!-- Pon aquí tu **URL_MUSICA_FONDO** o ./assets/audio/musica.mp3 -->
-  <audio id="voiceNote" src="" preload="none"></audio>   <!-- Pon aquí tu **URL_AUDIO_INVITACION** o ./assets/audio/mensaje.mp3 -->
-  <audio id="openSfx" src="./assets/audio/open.mp3" preload="auto"></audio> <!-- 🔊 sonido abrir sobre -->
+  <audio id="bgMusic" src="" loop preload="none"></audio> <!-- ./assets/audio/musica.mp3 -->
+  <audio id="voiceNote" src="" preload="none"></audio>   <!-- ./assets/audio/mensaje.mp3 -->
 
   <main class="wrap" id="app" data-event-datetime="2025-11-15T18:00">
     <!-- HERO -->
     <header class="hero">
+      <!-- Si esta imagen no carga, el hero usará --hero-image como fondo -->
       <img class="portrait" src="./assets/img/portada.jpg" alt="Retrato de la quinceañera" onerror="this.style.display='none'"/>
       <div class="monogram" aria-label="Monograma">
         <div>
@@ -211,6 +218,7 @@
       <h2>Dónde & Cuándo</h2>
       <p class="subtitle">Acompáñame en la ceremonia y la recepción.</p>
       <div class="grid">
+        <!-- CEREMONIA -->
         <article class="card place">
           <img src="./assets/img/ceremonia.jpg" alt="Foto del lugar de la ceremonia" loading="lazy" onerror="this.style.display='none'">
           <div style="padding:12px 14px 16px;">
@@ -224,6 +232,7 @@
             </div>
           </div>
         </article>
+        <!-- RECEPCIÓN -->
         <article class="card place">
           <img src="./assets/img/recepcion.jpg" alt="Foto del salón de la recepción" loading="lazy" onerror="this.style.display='none'">
           <div style="padding:12px 14px 16px;">
@@ -295,30 +304,29 @@
     const $ = (s, el=document)=> el.querySelector(s);
     const $$= (s, el=document)=> [...el.querySelectorAll(s)];
 
-    /* 📨 Abrir sobre + SONIDO y (opcional) inicio de música de fondo */
+    // 📨 Abrir sobre
     (function(){
       const gate = $('#gate');
       const btn  = $('#openGate');
-      const sfx  = $('#openSfx');
+      const musicBtn = $('#musicToggle');
       btn.addEventListener('click', ()=>{
-        try{ sfx.currentTime=0; sfx.play(); }catch{}
         gate.classList.add('open');
-        document.body.classList.remove('lock');   // volver a permitir scroll
-
-        // Si quieres iniciar la música de fondo al abrir, descomenta esta línea:
-        // $('#bgMusic')?.play().catch(()=>{});
-
+        document.body.classList.remove('lock');   // vuelve a permitir scroll
+        // Si ya cargaste música de fondo, puedes iniciar aquí:
+        // $('#bgMusic')?.play().catch(()=>{});   // (algunos navegadores requieren interacción; ya hubo click)
         setTimeout(()=> gate.remove(), 800);      // limpia el DOM tras la animación
       });
-      // Accesible con Enter o Espacio
-      btn.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); btn.click(); }});
+      // Accesibilidad: también con Enter/Espacio
+      btn.addEventListener('keydown', (e)=>{
+        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); }
+      });
     })();
 
-    /* Animaciones on-scroll */
+    // Animaciones on-scroll
     const io = new IntersectionObserver(ents=>{ ents.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); }); }, {threshold:.15});
     $$('.aos').forEach(el=> io.observe(el));
 
-    /* Countdown */
+    // Countdown
     (function(){
       const root = document.getElementById('app');
       const dtStr = root.getAttribute('data-event-datetime');
@@ -338,7 +346,7 @@
       tick(); setInterval(tick,1000);
     })();
 
-    /* Carrusel */
+    // Carrusel
     (function(){
       const track = document.getElementById('track');
       const prev  = document.getElementById('prev');
@@ -348,7 +356,7 @@
       next?.addEventListener('click', ()=> track.scrollBy({left: track.clientWidth, behavior:'smooth'}));
     })();
 
-    /* Música */
+    // Música
     const bgMusic    = document.getElementById('bgMusic');
     const musicBtn   = document.getElementById('musicToggle');
     let musicPlaying = false;
@@ -360,7 +368,7 @@
     musicBtn.addEventListener('click', toggleMusic);
     window.addEventListener('keydown', e=>{ if(e.key.toLowerCase()==='m') toggleMusic(); });
 
-    /* Mensaje de voz */
+    // Mensaje de voz
     const voiceBtn  = document.getElementById('btnVoice');
     const voiceNote = document.getElementById('voiceNote');
     let voicePlaying=false;
@@ -371,7 +379,7 @@
     });
     voiceNote.addEventListener('ended', ()=>{ voicePlaying=false; voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; });
 
-    /* RSVP WhatsApp */
+    // RSVP WhatsApp
     const rsvp = document.getElementById('rsvpForm');
     rsvp?.addEventListener('submit', (e)=>{
       e.preventDefault();
@@ -386,7 +394,7 @@
     });
     document.getElementById('editRSVP').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 
-    /* Agregar a calendario (.ics) */
+    // Agregar a calendario (.ics)
     function addMinutes(date, m){ const d=new Date(date); d.setMinutes(d.getMinutes()+m); return d; }
     function formatICS(dt){ const p=n=>String(n).padStart(2,'0'); return `${dt.getUTCFullYear()}${p(dt.getUTCMonth()+1)}${p(dt.getUTCDate())}T${p(dt.getUTCHours())}${p(dt.getUTCMinutes())}${p(dt.getUTCSeconds())}Z`; }
     function downloadICS({title, description, location, start, durationMinutes=120}){
@@ -403,35 +411,6 @@
         downloadICS({title, description:'Te esperamos ❤', location:place, start, durationMinutes:mins});
       });
     });
-
-    /* ✨ Estrellitas en CUALQUIER click/tap */
-    function burstAt(x,y){
-      // generar varias chispas alrededor del click
-      for(let i=0;i<12;i++){
-        const s=document.createElement('i');
-        s.className='spark';
-        const ang = Math.random()*Math.PI*2;
-        const dist= 20 + Math.random()*40;
-        const dx = Math.cos(ang)*dist;
-        const dy = Math.sin(ang)*dist;
-        s.style.left = (x+dx)+'px';
-        s.style.top  = (y+dy)+'px';
-        document.body.appendChild(s);
-        setTimeout(()=> s.remove(), 900);
-      }
-    }
-    // clicks del mouse
-    document.addEventListener('click', (e)=>{
-      // evita poner chispas cuando haces click para seleccionar texto dentro de inputs
-      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      burstAt(e.clientX, e.clientY);
-    });
-    // taps táctiles
-    document.addEventListener('touchstart', (e)=>{
-      const t = e.touches[0];
-      if(!t) return;
-      burstAt(t.clientX, t.clientY);
-    }, {passive:true});
   </script>
 </body>
 </html>
