@@ -1,141 +1,451 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Invitación a mis XV Años - BD</title>
-    <meta name="description" content="Te invito a celebrar mis XV años. Acompáñame en este día tan especial.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Invitación XV — Plantilla Responsive</title>
+  <meta name="description" content="Invitación elegante optimizada para celular con cuenta regresiva, galería, mapa, RSVP por WhatsApp y audio.">
+  <meta name="theme-color" content="#c6a664" />
+  <link rel="canonical" href="https://invitacionnoviembre.vercel.app/">
 
-    <meta property="og:title" content="¡Estás invitado a mis XV! - BD">
-    <meta property="og:description" content="Hay momentos en la vida que siempre vamos a recordar. Me encantará compartir este día contigo.">
-    <meta property="og:image" content="./assets/img/portada.jpg">
-    <meta property="og:url" content="URL_DE_TU_INVITACION_AQUI">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="¡Estás invitado a mis XV! - BD">
-    <meta name="twitter:description" content="Hay momentos en la vida que siempre vamos a recordar. Me encantará compartir este día contigo.">
-    <meta name="twitter:image" content="./assets/img/portada.jpg">
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="¡Te invito a mis XV!" />
+  <meta property="og:description" content="Cuenta regresiva, galería, mapa y confirmación por WhatsApp." />
+  <meta property="og:image" content="./assets/img/portada.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Tipografías -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- Íconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+  <style>
+    :root{
+      --primary:#c6a664;
+      --primary-2:#a9904f;
+      --text:#1f1f1f;
+      --muted:#6b6b6b;
+      --card:#ffffffEE;
+      --bg-color:#f6edf1;
+      --shadow: 0 8px 24px rgba(0,0,0,.12);
+      --radius: 20px;
 
-    <script type="module" src="main.js"></script>
+      --texture: radial-gradient(60vw 60vw at -10% -10%, #fdf6f9 0 30%, transparent 32%),
+                 radial-gradient(50vw 50vw at 120% -20%, #f7e7ee 0 35%, transparent 37%),
+                 radial-gradient(40vw 40vw at 50% 120%, #f3dbe6 0 28%, transparent 30%);
 
-    <script type="application/ld+json" id="js-schema-data"></script>
+      --bg-image: url("./assets/img/portada.jpg");
+      --bg-blend: soft-light;
+      --hero-image: url("./assets/img/portada.jpg");
+
+      /* Accesibilidad de contraste para botones */
+      --btn-text:#111111; /* texto oscuro sobre dorado */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text); font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial;
+      line-height:1.6;
+      background:
+        var(--texture),
+        var(--bg-image);
+      background-color: var(--bg-color);
+      background-repeat:no-repeat, no-repeat;
+      background-size: cover, cover;
+      background-position:center top, center top;
+      background-blend-mode: normal, var(--bg-blend);
+      background-attachment: scroll;
+      overflow-x:hidden;
+    }
+
+    .wrap{ width:100%; max-width:720px; margin-inline:auto; padding-inline:16px; }
+    .card{ background:var(--card); backdrop-filter: blur(6px); border-radius:var(--radius); box-shadow:0 6px 18px rgba(0,0,0,.12); }
+
+    /* HERO (usa dvh para barras del navegador móviles) */
+    .hero{
+      position:relative; overflow:hidden; border-radius:0 0 32px 32px;
+      min-height: min(70dvh, 640px);
+      display:flex; align-items:flex-end;
+      background-image: var(--hero-image);
+      background-size: cover; background-position: center;
+      padding-bottom: 22px;
+    }
+    .hero .portrait{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      filter: contrast(1.05) saturate(1.05);
+    }
+
+    /* Monograma */
+    .monogram{
+      position:relative; z-index:2;
+      width: min(42vw, 160px);
+      aspect-ratio: 1 / 1;
+      margin:0 auto -18px;
+      border-radius:50%; display:grid; place-items:center; color:#fff; text-align:center;
+      background: radial-gradient(100px 100px at center,
+                  rgba(198,166,100,.90), rgba(169,144,79,.90));
+      box-shadow:0 10px 26px rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.35);
+    }
+    .monogram .small{font:600 14px/1 'Poppins',sans-serif; letter-spacing:.2em}
+    .monogram .big{font:400 44px/1 'Great Vibes', cursive}
+
+    /* Contador */
+    .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 20px; color:#fff; font-weight:600; }
+    .countdown .item{ flex:1; text-align:center; background:rgba(0,0,0,.4); border-radius:14px; padding:10px 6px; }
+    .countdown .num{ font-size: clamp(20px, 6vw, 28px); display:block; }
+    .countdown .lbl{ font-size:12px; opacity:.9; letter-spacing:.03em }
+
+    section{ padding:28px 0; }
+    h2{ font-family:'Playfair Display', serif; font-weight:700; font-size: clamp(22px, 5vw, 28px); margin:0 0 8px; text-align:center; }
+    .subtitle{ text-align:center; color:var(--muted); margin-bottom:18px; }
+    .intro{ text-align:center; padding:20px; }
+    .script{ font-family:'Great Vibes', cursive; font-size: clamp(30px, 7vw, 36px); color:var(--primary-2); }
+
+    .grid{ display:grid; gap:18px; }
+    .place img{ width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:14px; }
+    .place h3{ margin:12px 0 6px; font-family:'Playfair Display',serif; }
+    .meta{ color:var(--muted); font-size:14px; }
+    .btns{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+
+    .btn{
+      appearance:none; border:0; cursor:pointer; padding:12px 16px;
+      border-radius:14px; background:var(--primary); color:var(--btn-text);
+      font-weight:600; box-shadow:var(--shadow); text-decoration:none;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn.ghost{ background:transparent; color:#111111; border:2px solid var(--primary) }
+
+    .carousel{ position:relative; }
+    .track{ display:flex; overflow:auto; scroll-snap-type:x mandatory; gap:10px; padding-bottom:8px; }
+    .track img{ width:100%; flex:0 0 100%; scroll-snap-align:center; border-radius:18px; aspect-ratio: 3/4; object-fit:cover; }
+    .nav{ position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
+    .nav button{ pointer-events:auto; border:none; background:rgba(0,0,0,.5); color:#fff; width:48px; height:48px; border-radius:50%; display:grid; place-items:center; }
+
+    .rsvp small{ color:var(--muted); }
+    .field{ display:flex; gap:8px; margin:10px 0; }
+    .field input, .field select{ flex:1; padding:12px 12px; border-radius:12px; border:1.5px solid #ddd; background:#fff; font:inherit; }
+
+    .music{ position:fixed; right:14px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index:50; }
+
+    .aos{ opacity:0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+    .aos.show{ opacity:1; transform:none }
+
+    .divider{ height:1px; background:linear-gradient(to right, transparent, #00000020 15%, #00000020 85%, transparent); margin:8px 0 16px; }
+
+    /* Accesibilidad: focus visible */
+    :focus-visible{ outline:3px solid var(--primary); outline-offset:2px }
+
+    @media(min-width:700px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .monogram{ width:200px; }
+    }
+
+    /* Respeta preferencias del usuario */
+    @media (prefers-reduced-motion: reduce){
+      .aos{ transition:none }
+    }
+  </style>
 </head>
 <body>
-    <div class="app-container">
-        <header class="hero">
-            <img class="hero__background" src="./assets/img/portada.jpg" alt="Retrato de la quinceañera" loading="eager">
-            <div class="hero__monogram monogram" aria-label="Monograma">
-                <div class="monogram__content">
-                    <div class="monogram__label">XV</div>
-                    <div class="monogram__initials js-monogram-initials">BD</div>
-                </div>
+  <!-- AUDIO -->
+  <audio id="bgMusic" src="./assets/audio/musica.mp3" loop preload="none"></audio>
+  <audio id="voiceNote" src="./assets/audio/mensaje.mp3" preload="none"></audio>
+
+  <!-- data-event-datetime: hora local de Guatemala con offset -06:00 -->
+  <main class="wrap" id="app" data-event-datetime="2025-11-30T20:00-06:00">
+    <!-- HERO -->
+    <header class="hero">
+      <img class="portrait" src="./assets/img/portada.jpg" alt="Retrato de la quinceañera" loading="eager" fetchpriority="high" onerror="this.style.display='none'"/>
+      <div class="monogram" aria-label="Monograma">
+        <div>
+          <div class="small">XV</div>
+          <div class="big">BD</div>
+        </div>
+      </div>
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="item"><span class="num" id="d">--</span><span class="lbl">Días</span></div>
+        <div class="item"><span class="num" id="h">--</span><span class="lbl">Horas</span></div>
+        <div class="item"><span class="num" id="m">--</span><span class="lbl">Minutos</span></div>
+        <div class="item"><span class="num" id="s">--</span><span class="lbl">Segundos</span></div>
+      </div>
+    </header>
+
+    <!-- INTRO -->
+    <section class="card intro aos">
+      <h2>¡Te invito a mis XV!</h2>
+      <p>Hay momentos en la vida que siempre vamos a recordar. Me encantará compartir este día contigo.</p>
+      <p class="script">Escobar</p>
+      <div class="btns" style="justify-content:center; margin-top:10px;">
+        <button class="btn ghost" id="btnVoice" aria-pressed="false"><i class="bi bi-mic-fill"></i> Escuchar invitación</button>
+      </div>
+    </section>
+
+    <!-- DÓNDE & CUÁNDO -->
+    <section class="aos">
+      <h2>Dónde &amp; Cuándo</h2>
+      <p class="subtitle">Acompáñame en la ceremonia y la recepción.</p>
+      <div class="grid">
+        <!-- CEREMONIA -->
+        <article class="card place">
+          <img src="./assets/img/Ceremonia.png" alt="Foto del lugar de la ceremonia" loading="lazy">
+          <div style="padding:12px 14px 16px;">
+            <h3>Iglesia Retalhuleu</h3>
+            <div class="meta">Sábado 30 de Noviembre, 6:00 pm</div>
+            <div class="divider"></div>
+            <div class="meta"><strong>Dirección:</strong> Parque central de Retalhuleu</div>
+            <div class="btns">
+              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Eoam4KMmS7f39aFc7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
+              <!-- Hora específica para la misa -->
+              <button class="btn addcal" data-title="Misa de XV" data-location="Parque central de Retalhuleu" data-start="2025-11-30T18:00-06:00" data-duration="PT60M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
-            <div class="hero__countdown countdown" aria-live="polite">
-                <div class="countdown__item"><span class="countdown__num js-countdown-days">--</span><span class="countdown__label">Días</span></div>
-                <div class="countdown__item"><span class="countdown__num js-countdown-hours">--</span><span class="countdown__label">Horas</span></div>
-                <div class="countdown__item"><span class="countdown__num js-countdown-minutes">--</span><span class="countdown__label">Minutos</span></div>
-                <div class="countdown__item"><span class="countdown__num js-countdown-seconds">--</span><span class="countdown__label">Segundos</span></div>
+          </div>
+        </article>
+        <!-- RECEPCIÓN -->
+        <article class="card place">
+          <img src="./assets/img/recepcion.png" alt="Foto del salón de la recepción" loading="lazy">
+          <div style="padding:12px 14px 16px;">
+            <h3>Salón de eventos Las Morenas</h3>
+            <div class="meta">Sábado 30 de Noviembre, 8:00 pm</div>
+            <div class="divider"></div>
+            <div class="meta"><strong>Dirección:</strong> Salón de eventos Las Morenas</div>
+            <div class="btns">
+              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/B3KwMzobw1izasHU7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
+              <button class="btn addcal" data-title="Recepción XV" data-location="Salón de eventos Las Morenas" data-start="2025-11-30T20:00-06:00" data-duration="PT240M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
-        </header>
+          </div>
+        </article>
+      </div>
+    </section>
 
-        <main class="main-content">
-            <section class="card intro aos" aria-labelledby="intro-heading">
-                <h2 id="intro-heading" class="intro__heading">¡Te invito a mis XV!</h2>
-                <p>Hay momentos en la vida que siempre vamos a recordar. Me encantará compartir este día contigo.</p>
-                <p class="intro__signature script js-signature-name">Escobar</p>
-                <div class="button-group" style="justify-content:center; margin-top:10px;">
-                    <button class="btn btn--ghost js-voice-btn"><i class="bi bi-mic-fill"></i> <span class="js-voice-btn-text">Escuchar invitación</span></button>
-                </div>
-            </section>
+    <!-- GALERÍA -->
+    <section class="aos">
+      <h2>Mis Fotos</h2>
+      <p class="subtitle">Desliza para ver la galería</p>
+      <div class="card carousel">
+        <div class="track" id="track" tabindex="0" aria-label="Carrusel de fotos" aria-roledescription="carrusel">
+          <img src="./assets/img/portada.jpg" alt="Foto 1 de la quinceañera">
+          <img src="./assets/img/foto1.jpg"  alt="Foto 2 de la quinceañera">
+          <img src="./assets/img/foto2.jpg"  alt="Foto 3 de la quinceañera">
+          <img src="./assets/img/recepcion.png" alt="Foto 4, salón de la recepción">
+        </div>
+        <div class="nav" aria-hidden="true">
+          <button id="prev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
+          <button id="next" aria-label="Siguiente"><i class="bi bi-chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
 
-            <section class="aos" aria-labelledby="location-heading">
-                <h2 id="location-heading" class="section-title">Dónde & Cuándo</h2>
-                <p class="section-subtitle">Acompáñame en la ceremonia y la recepción.</p>
-                <div class="grid-container">
-                    <article class="card place js-ceremony-card">
-                        <img class="place__image" src="./assets/img/Ceremonia.png" alt="Foto del lugar de la ceremonia" loading="lazy">
-                        <div class="place__details">
-                            <h3 class="place__title js-ceremony-title"></h3>
-                            <div class="place__meta js-ceremony-datetime"></div>
-                            <div class="divider"></div>
-                            <div class="place__meta"><strong>Dirección:</strong> <span class="js-ceremony-address"></span></div>
-                            <div class="button-group">
-                                <a class="btn btn--ghost js-ceremony-map" target="_blank" rel="noopener" href="#"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
-                                <button class="btn js-add-to-calendar" data-event-type="ceremony"><i class="bi bi-calendar-plus"></i> Agendar</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="card place js-reception-card">
-                        <img class="place__image" src="./assets/img/recepcion.png" alt="Foto del salón de la recepción" loading="lazy">
-                        <div class="place__details">
-                            <h3 class="place__title js-reception-title"></h3>
-                            <div class="place__meta js-reception-datetime"></div>
-                            <div class="divider"></div>
-                            <div class="place__meta"><strong>Dirección:</strong> <span class="js-reception-address"></span></div>
-                            <div class="button-group">
-                                <a class="btn btn--ghost js-reception-map" target="_blank" rel="noopener" href="#"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
-                                <button class="btn js-add-to-calendar" data-event-type="reception"><i class="bi bi-calendar-plus"></i> Agendar</button>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
+    <!-- RSVP -->
+    <section class="aos card rsvp" style="padding:16px 16px 18px;">
+      <h2>Confirmar asistencia</h2>
+      <p class="subtitle">Por favor confirma tu asistencia un mes antes del evento. ¡Gracias!</p>
 
-            <section class="aos" aria-labelledby="gallery-heading">
-                <h2 id="gallery-heading" class="section-title">Mis Fotos</h2>
-                <p class="section-subtitle">Desliza para ver la galería</p>
-                <div class="card carousel">
-                    <div class="carousel__track js-gallery-track">
-                        </div>
-                    <div class="carousel__nav" aria-hidden="true">
-                        <button class="js-gallery-prev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
-                        <button class="js-gallery-next" aria-label="Siguiente"><i class="bi bi-chevron-right"></i></button>
-                    </div>
-                </div>
-            </section>
+      <!-- Recomendado: número en formato internacional sin +. Guatemala = 502 -->
+      <form id="rsvpForm" data-whatsapp="50254389207">
+        <div class="field"><input required type="text" name="nombre" placeholder="Tu nombre completo" autocomplete="name"></div>
+        <div class="field">
+          <select name="acompanantes" aria-label="Acompañantes">
+            <option value="0">Asistiré sin acompañantes</option>
+            <option value="1">+1 acompañante</option>
+            <option value="2">+2 acompañantes</option>
+            <option value="3">+3 acompañantes</option>
+          </select>
+        </div>
+        <div class="btns">
+          <button type="submit" class="btn" id="btnWA"><i class="bi bi-whatsapp"></i> Confirmar por WhatsApp</button>
+        </div>
+        <small>También puedes llamar a
+          <a href="tel:+50254389207">+502 5438 9207</a>.
+        </small>
+      </form>
+    </section>
 
-            <section class="card rsvp aos" aria-labelledby="rsvp-heading">
-                <h2 id="rsvp-heading" class="rsvp__heading">Confirmar asistencia</h2>
-                <p class="section-subtitle">Por favor confirma tu asistencia un mes antes del evento. ¡Gracias!</p>
-                <form class="rsvp__form js-rsvp-form">
-                    <div class="form-field"><input required type="text" name="nombre" placeholder="Tu nombre completo" autocomplete="name"></div>
-                    <div class="form-field">
-                        <select name="acompanantes" aria-label="Acompañantes">
-                            <option value="0">Asistiré sin acompañantes</option>
-                            <option value="1">+1 acompañante</option>
-                            <option value="2">+2 acompañantes</option>
-                            <option value="3">+3 acompañantes</option>
-                        </select>
-                    </div>
-                    <div class="button-group">
-                        <button type="submit" class="btn"><i class="bi bi-whatsapp"></i> Confirmar por WhatsApp</button>
-                    </div>
-                    <small class="rsvp__contact-info">También puedes llamar al <a class="js-rsvp-phone-link" href="#"></a>.</small>
-                </form>
-            </section>
+    <section class="aos" style="text-align:center; color:var(--muted); padding-bottom:56px;">
+      <p>Con cariño,</p>
+      <p class="script" style="margin-top:-6px">Escobar</p>
+    </section>
+  </main>
 
-            <section class="closing aos">
-                <p>Con cariño,</p>
-                <p class="closing__signature script js-signature-name">Escobar</p>
-            </section>
-        </main>
-    </div>
+  <!-- Botón flotante música -->
+  <div class="music">
+    <button class="btn" id="musicToggle" aria-pressed="false" aria-label="Reproducir música">
+      <i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>
+    </button>
+  </div>
 
-    <audio id="js-bg-music" loop preload="auto"></audio>
-    <audio id="js-voice-note" preload="auto"></audio>
+  <!-- Datos estructurados para mejor previsualización/SEO -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Event",
+    "name":"XV de Escobar",
+    "startDate":"2025-11-30T20:00:00-06:00",
+    "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus":"https://schema.org/EventScheduled",
+    "image":["./assets/img/portada.jpg"],
+    "description":"Celebración de XV años con ceremonia y recepción.",
+    "subEvent":[
+      {
+        "@type":"Event",
+        "name":"Misa de XV",
+        "startDate":"2025-11-30T18:00:00-06:00",
+        "location":{"@type":"Place","name":"Iglesia Retalhuleu","address":"Parque central de Retalhuleu"}
+      },
+      {
+        "@type":"Event",
+        "name":"Recepción XV",
+        "startDate":"2025-11-30T20:00:00-06:00",
+        "location":{"@type":"Place","name":"Salón de eventos Las Morenas","address":"Salón de eventos Las Morenas"}
+      }
+    ]
+  }
+  </script>
 
-    <div class="music-control">
-        <button class="btn js-music-toggle" aria-pressed="false" aria-label="Reproducir música">
-            <i class="bi bi-music-note-beamed"></i><span class="js-music-toggle-text">Música</span>
-        </button>
-    </div>
+  <script>
+    const $  = (s, el=document)=> el.querySelector(s);
+    const $$ = (s, el=document)=> [...el.querySelectorAll(s)];
+
+    // Autoplay opcional al primer toque/click (respeta prefers-reduced-motion)
+    document.addEventListener('DOMContentLoaded', () => {
+      const startMusic = () => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        document.getElementById('musicToggle')?.click();
+        document.removeEventListener('click', startMusic);
+        document.removeEventListener('touchstart', startMusic);
+      };
+      document.addEventListener('click', startMusic, {once:true});
+      document.addEventListener('touchstart', startMusic, {once:true});
+    });
+
+    // Animaciones on-scroll
+    const io = new IntersectionObserver(ents=>{
+      ents.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    }, {threshold:.15});
+    $$('.aos').forEach(el=> io.observe(el));
+
+    // Countdown (usa fecha del data-attribute con offset -06:00)
+    (function(){
+      const root = $('#app');
+      const dtStr = root.getAttribute('data-event-datetime');
+      if(!dtStr) return;
+      const eventDate = new Date(dtStr);
+      const pad = n=> String(n).padStart(2,'0');
+      function tick(){
+        const now = new Date();
+        let diff = eventDate - now;
+        if (diff < 0) diff = 0;
+        const d = Math.floor(diff / (1000*60*60*24));
+        const h = Math.floor((diff / (1000*60*60)) % 24);
+        const m = Math.floor((diff / (1000*60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+        $('#d').textContent = pad(d);
+        $('#h').textContent = pad(h);
+        $('#m').textContent = pad(m);
+        $('#s').textContent = pad(s);
+      }
+      tick(); setInterval(tick,1000);
+    })();
+
+    // Carrusel + teclado
+    (function(){
+      const track = $('#track');
+      const by = ()=> track.clientWidth;
+      $('#prev')?.addEventListener('click', ()=> track.scrollBy({left:-by(), behavior:'smooth'}));
+      $('#next')?.addEventListener('click', ()=> track.scrollBy({left: by(), behavior:'smooth'}));
+      track?.addEventListener('keydown', (e)=>{
+        if(e.key==='ArrowLeft') track.scrollBy({left:-by(), behavior:'smooth'});
+        if(e.key==='ArrowRight') track.scrollBy({left: by(), behavior:'smooth'});
+      });
+    })();
+
+    // Música (toggle); pausa si se reproduce el mensaje de voz
+    (function(){
+      const bgMusic = $('#bgMusic');
+      const musicBtn = $('#musicToggle');
+      let musicPlaying = false;
+
+      async function toggleMusic(){
+        if(!bgMusic.src){ alert('Agrega una pista en ./assets/audio/musica.mp3'); return; }
+        try{
+          if(musicPlaying){
+            bgMusic.pause(); musicPlaying=false;
+            musicBtn.setAttribute('aria-pressed','false');
+            musicBtn.innerHTML='<i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>';
+          }else{
+            await bgMusic.play(); musicPlaying=true;
+            musicBtn.setAttribute('aria-pressed','true');
+            musicBtn.innerHTML='<i class="bi bi-pause-fill"></i><span style="margin-left:6px">Pausar</span>';
+          }
+        }catch(e){}
+      }
+      musicBtn.addEventListener('click', toggleMusic);
+
+      // Pausar música al reproducir nota de voz
+      const voiceNote = $('#voiceNote');
+      voiceNote.addEventListener('play', ()=>{ if(musicPlaying){ bgMusic.pause(); musicPlaying=false; musicBtn.setAttribute('aria-pressed','false'); musicBtn.innerHTML='<i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>'; }});
+    })();
+
+    // Mensaje de voz accesible
+    (function(){
+      const voiceBtn  = $('#btnVoice');
+      const voiceNote = $('#voiceNote');
+      let voicePlaying=false;
+      voiceBtn.addEventListener('click', ()=>{
+        if(!voiceNote.src){ alert('Agrega un audio en ./assets/audio/mensaje.mp3'); return; }
+        if(voicePlaying){ voiceNote.pause(); voiceNote.currentTime=0; voicePlaying=false; voiceBtn.setAttribute('aria-pressed','false'); voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; }
+        else { voiceNote.play(); voicePlaying=true; voiceBtn.setAttribute('aria-pressed','true'); voiceBtn.innerHTML='<i class="bi bi-stop-fill"></i> Detener audio'; }
+      });
+      voiceNote.addEventListener('ended', ()=>{ voicePlaying=false; voiceBtn.setAttribute('aria-pressed','false'); voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; });
+    })();
+
+    // RSVP WhatsApp
+    (function(){
+      const rsvp = $('#rsvpForm');
+      rsvp?.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        const phone = rsvp.getAttribute('data-whatsapp')?.trim();
+        if(!/^\d{8,15}$/.test(phone||'')){
+          alert('Número de WhatsApp inválido. Usa formato internacional sin + ni espacios si es necesario.');
+          return;
+        }
+
+        const nombre = rsvp.nombre.value.trim();
+        if(!nombre){ alert('Por favor escribe tu nombre.'); return; }
+
+        const acomp  = rsvp.acompanantes.value;
+        const dtStr  = $('#app').getAttribute('data-event-datetime');
+        const fecha  = new Date(dtStr).toLocaleString('es-GT',{ dateStyle:'full', timeStyle:'short' });
+        const msg    = `Hola, soy ${nombre}. Confirmo asistencia a los XV el ${fecha}. Acompañantes: ${acomp}.`;
+        const url    = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank', 'noopener');
+      });
+    })();
+
+    // Agregar a calendario (.ics) por evento
+    (function(){
+      function addMinutes(date, m){ const d=new Date(date); d.setMinutes(d.getMinutes()+m); return d; }
+      function formatICS(dt){ const p=n=>String(n).padStart(2,'0'); return `${dt.getUTCFullYear()}${p(dt.getUTCMonth()+1)}${p(dt.getUTCDate())}T${p(dt.getUTCHours())}${p(dt.getUTCMinutes())}${p(dt.getUTCSeconds())}Z`; }
+      function downloadICS({title, description, location, start, durationMinutes=120}){
+        const st=new Date(start); const en=addMinutes(st,durationMinutes);
+        const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Creative Studio//Invitacion//ES\nBEGIN:VEVENT\nUID:${Date.now()}@creativestudio\nDTSTAMP:${formatICS(new Date())}\nDTSTART:${formatICS(st)}\nDTEND:${formatICS(en)}\nSUMMARY:${title}\nDESCRIPTION:${description}\nLOCATION:${location}\nEND:VEVENT\nEND:VCALENDAR`;
+        const blob=new Blob([ics],{type:'text/calendar'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${title.replace(/\s+/g,'_')}.ics`; a.click(); URL.revokeObjectURL(a.href);
+      }
+      $$('.addcal').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const title=btn.dataset.title||'Evento';
+          const place=btn.dataset.location||'';
+          const mins = Number(/PT(\d+)M/.exec(btn.dataset.duration||'PT120M')?.[1]||120);
+          const start=btn.dataset.start || $('#app').getAttribute('data-event-datetime');
+          downloadICS({title, description:'Te esperamos ❤', location:place, start, durationMinutes:mins});
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
