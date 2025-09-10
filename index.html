@@ -23,12 +23,12 @@
 
   <style>
     :root{
-      --primary:#c6a664;     
+      --primary:#c6a664;
       --primary-2:#a9904f;
       --text:#1f1f1f;
       --muted:#6b6b6b;
-      --card:#ffffffEE;      
-      --bg-color:#f6edf1;    
+      --card:#ffffffEE;
+      --bg-color:#f6edf1;
       --shadow: 0 8px 24px rgba(0,0,0,.12);
       --radius: 20px;
 
@@ -39,6 +39,8 @@
       --bg-image: url("./assets/img/portada.jpg");
       --bg-blend: soft-light;
       --hero-image: url("./assets/img/portada.jpg");
+
+      --countdown-h: 78px; /* altura para alinear el monograma */
     }
 
     *{box-sizing:border-box}
@@ -56,6 +58,7 @@
       background-blend-mode: normal, var(--bg-blend);
       background-attachment: scroll;
       overflow-x:hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .wrap{ width:100%; max-width:720px; margin-inline:auto; padding-inline:16px; }
@@ -68,33 +71,33 @@
       display:flex; align-items:flex-end;
       background-image: var(--hero-image);
       background-size: cover; background-position: center;
-      padding-bottom: 22px; 
+      padding-bottom: 22px;
     }
     .hero .portrait{
       position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       filter: contrast(1.05) saturate(1.05);
     }
 
-    /* Monograma */
+    /* Monograma (alineado con el contador) */
     .monogram{
-      position:relative; z-index:2;
+      position:absolute; left:50%; bottom: calc(var(--countdown-h) + 8px); transform:translateX(-50%);
+      z-index:2;
       width: min(42vw, 160px);
-      aspect-ratio: 1 / 1; 
-      margin:0 auto -18px; 
+      aspect-ratio: 1 / 1;
+      margin:0;
       border-radius:50%; display:grid; place-items:center; color:#fff; text-align:center;
-      background: radial-gradient(100px 100px at center,
-                  rgba(198,166,100,.90), rgba(169,144,79,.90));
+      background: radial-gradient(100px 100px at center, rgba(198,166,100,.90), rgba(169,144,79,.90));
       box-shadow:0 10px 26px rgba(0,0,0,.22);
       border:1px solid rgba(255,255,255,.35);
     }
     .monogram .small{font:600 14px/1 'Poppins',sans-serif; letter-spacing:.2em}
     .monogram .big{font:400 44px/1 'Great Vibes', cursive}
 
-    /* Contador */
-    .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 20px; color:#fff; font-weight:600; }
-    .countdown .item{ flex:1; text-align:center; background:rgba(0,0,0,.4); border-radius:14px; padding:10px 6px; }
-    .countdown .num{ font-size:24px; display:block; }
-    .countdown .lbl{ font-size:12px; opacity:.9; letter-spacing:.03em }
+    /* Contador totalmente transparente */
+    .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 20px; color:#fff; font-weight:600; min-height: var(--countdown-h); }
+    .countdown .item{ flex:1; text-align:center; background:transparent; border-radius:14px; padding:10px 6px; }
+    .countdown .num{ font-size:24px; display:block; text-shadow:0 1px 3px rgba(0,0,0,.35) }
+    .countdown .lbl{ font-size:12px; letter-spacing:.03em; text-shadow:0 1px 2px rgba(0,0,0,.35) }
 
     section{ padding:28px 0; }
     h2{ font-family:'Playfair Display', serif; font-weight:700; font-size:28px; margin:0 0 8px; text-align:center; }
@@ -107,14 +110,15 @@
     .place h3{ margin:12px 0 6px; font-family:'Playfair Display',serif; }
     .meta{ color:var(--muted); font-size:14px; }
     .btns{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
-    .btn{ appearance:none; border:0; cursor:pointer; padding:10px 14px; border-radius:12px; background:var(--primary); color:#fff; font-weight:600; box-shadow:var(--shadow); text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+    .btn{ appearance:none; border:0; cursor:pointer; padding:10px 14px; border-radius:12px; background:var(--primary); color:#fff; font-weight:600; box-shadow:var(--shadow); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition: transform .08s ease, filter .15s ease; }
+    .btn:active{ transform: translateY(1px) scale(.98); }
     .btn.ghost{ background:transparent; color:var(--primary); border:2px solid var(--primary) }
 
     .carousel{ position:relative; }
     .track{ display:flex; overflow:auto; scroll-snap-type:x mandatory; gap:10px; padding-bottom:8px; }
     .track img{ width:100%; flex:0 0 100%; scroll-snap-align:center; border-radius:18px; aspect-ratio: 3/4; object-fit:cover; }
     .nav{ position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
-    .nav button{ pointer-events:auto; border:none; background:rgba(0,0,0,.5); color:#fff; width:42px; height:42px; border-radius:50%; display:grid; place-items:center; }
+    .nav button{ pointer-events:auto; border:none; background:rgba(0,0,0,.5); color:#fff; width:48px; height:48px; border-radius:50%; display:grid; place-items:center; }
 
     .rsvp small{ color:var(--muted); }
     .field{ display:flex; gap:8px; margin:10px 0; }
@@ -127,8 +131,14 @@
 
     .divider{ height:1px; background:linear-gradient(to right, transparent, #00000020 15%, #00000020 85%, transparent); margin:8px 0 16px; }
 
-    /* Accesibilidad: focus visible */
+    /* Accesibilidad */
     :focus-visible{ outline:3px solid var(--primary); outline-offset:2px }
+
+    /* Micro-interacciones (tap/ripple) */
+    .tap{ position:relative; overflow:hidden; }
+    .tap:active{ transform: scale(.98); }
+    .ripple{ position:absolute; border-radius:50%; pointer-events:none; inset:auto; width:10px; height:10px; background:rgba(255,255,255,.35); transform:translate(-50%,-50%) scale(0); animation:ripple .6s ease; mix-blend-mode: overlay; }
+    @keyframes ripple{ to{ transform:translate(-50%,-50%) scale(12); opacity:0 } }
 
     @media(min-width:700px){
       .grid{ grid-template-columns: 1fr 1fr; }
@@ -136,9 +146,9 @@
       .monogram{ width:200px; }
     }
 
-    /* Respeta preferencias del usuario */
     @media (prefers-reduced-motion: reduce){
       .aos{ transition:none }
+      .ripple{ display:none }
     }
   </style>
 </head>
@@ -150,15 +160,15 @@
   <!-- data-event-datetime controla la cuenta regresiva (recepción). Usa hora local de Guatemala con offset -06:00 -->
   <main class="wrap" id="app" data-event-datetime="2025-11-30T20:00-06:00">
     <!-- HERO -->
-    <header class="hero">
+    <header class="hero tap">
       <img class="portrait" src="./assets/img/portada.jpg" alt="Retrato de la quinceañera" loading="eager" fetchpriority="high" onerror="this.style.display='none'"/>
-      <div class="monogram" aria-label="Monograma">
+      <div class="monogram tap" id="monogram" aria-label="Monograma">
         <div>
           <div class="small">XV</div>
           <div class="big">BD</div>
         </div>
       </div>
-      <div class="countdown" id="countdown" aria-live="polite">
+      <div class="countdown tap" id="countdown" aria-live="polite">
         <div class="item"><span class="num" id="d">--</span><span class="lbl">Días</span></div>
         <div class="item"><span class="num" id="h">--</span><span class="lbl">Horas</span></div>
         <div class="item"><span class="num" id="m">--</span><span class="lbl">Minutos</span></div>
@@ -167,46 +177,45 @@
     </header>
 
     <!-- INTRO -->
-    <section class="card intro aos">
+    <section class="card intro aos tap" id="intro">
       <h2>¡Te invito a mis XV!</h2>
       <p>Hay momentos en la vida que siempre vamos a recordar. Me encantará compartir este día contigo.</p>
       <p class="script">Escobar</p>
       <div class="btns" style="justify-content:center; margin-top:10px;">
-        <button class="btn ghost" id="btnVoice" aria-pressed="false"><i class="bi bi-mic-fill"></i> Escuchar invitación</button>
+        <button class="btn ghost tap" id="btnVoice" aria-pressed="false"><i class="bi bi-mic-fill"></i> Escuchar invitación</button>
       </div>
     </section>
 
     <!-- DÓNDE & CUÁNDO -->
-    <section class="aos">
+    <section class="aos" id="donde">
       <h2>Dónde &amp; Cuándo</h2>
       <p class="subtitle">Acompáñame en la ceremonia y la recepción.</p>
       <div class="grid">
         <!-- CEREMONIA -->
-        <article class="card place">
-          <img src="./assets/img/Ceremonia.png" alt="Foto del lugar de la ceremonia" loading="lazy">
+        <article class="card place tap">
+          <img class="tap" src="./assets/img/Ceremonia.png" alt="Foto del lugar de la ceremonia" loading="lazy">
           <div style="padding:12px 14px 16px;">
             <h3>Iglesia Retalhuleu</h3>
             <div class="meta">Sábado 30 de Noviembre, 6:00 pm</div>
             <div class="divider"></div>
             <div class="meta"><strong>Dirección:</strong> Parque central de Retalhuleu</div>
             <div class="btns">
-              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Eoam4KMmS7f39aFc7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
-              <!-- Cada botón ahora lleva su propio inicio (start) y duración -->
-              <button class="btn addcal" data-title="Misa de XV" data-location="Parque central de Retalhuleu" data-start="2025-11-30T18:00-06:00" data-duration="PT60M"><i class="bi bi-calendar-plus"></i> Agendar</button>
+              <a class="btn ghost tap" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Eoam4KMmS7f39aFc7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
+              <button class="btn addcal tap" data-title="Misa de XV" data-location="Parque central de Retalhuleu" data-start="2025-11-30T18:00-06:00" data-duration="PT60M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
           </div>
         </article>
         <!-- RECEPCIÓN -->
-        <article class="card place">
-          <img src="./assets/img/recepcion.png" alt="Foto del salón de la recepción" loading="lazy">
+        <article class="card place tap">
+          <img class="tap" src="./assets/img/recepcion.png" alt="Foto del salón de la recepción" loading="lazy">
           <div style="padding:12px 14px 16px;">
             <h3>Salón de eventos Las Morenas</h3>
             <div class="meta">Sábado 30 de Noviembre, 8:00 pm</div>
             <div class="divider"></div>
             <div class="meta"><strong>Dirección:</strong> Salón de eventos Las Morenas</div>
             <div class="btns">
-              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/B3KwMzobw1izasHU7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
-              <button class="btn addcal" data-title="Recepción XV" data-location="Salón de eventos Las Morenas" data-start="2025-11-30T20:00-06:00" data-duration="PT240M"><i class="bi bi-calendar-plus"></i> Agendar</button>
+              <a class="btn ghost tap" target="_blank" rel="noopener" href="https://maps.app.goo.gl/B3KwMzobw1izasHU7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
+              <button class="btn addcal tap" data-title="Recepción XV" data-location="Salón de eventos Las Morenas" data-start="2025-11-30T20:00-06:00" data-duration="PT240M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
           </div>
         </article>
@@ -214,25 +223,25 @@
     </section>
 
     <!-- GALERÍA -->
-    <section class="aos">
+    <section class="aos" id="galeria">
       <h2>Mis Fotos</h2>
       <p class="subtitle">Desliza para ver la galería</p>
-      <div class="card carousel">
+      <div class="card carousel tap">
         <div class="track" id="track" tabindex="0" aria-label="Carrusel de fotos" aria-roledescription="carrusel">
-          <img src="./assets/img/portada.jpg" alt="Foto 1 de la quinceañera">
-          <img src="./assets/img/foto1.jpg"  alt="Foto 2 de la quinceañera">
-          <img src="./assets/img/foto2.jpg"  alt="Foto 3 de la quinceañera">
-          <img src="./assets/img/recepcion.png" alt="Foto 4, salón de la recepción">
+          <img class="tap img-zoom" src="./assets/img/portada.jpg" alt="Foto 1 de la quinceañera">
+          <img class="tap img-zoom" src="./assets/img/foto1.jpg"  alt="Foto 2 de la quinceañera">
+          <img class="tap img-zoom" src="./assets/img/foto2.jpg"  alt="Foto 3 de la quinceañera">
+          <img class="tap img-zoom" src="./assets/img/recepcion.png" alt="Foto 4, salón de la recepción">
         </div>
         <div class="nav" aria-hidden="true">
-          <button id="prev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
-          <button id="next" aria-label="Siguiente"><i class="bi bi-chevron-right"></i></button>
+          <button id="prev" class="tap" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
+          <button id="next" class="tap" aria-label="Siguiente"><i class="bi bi-chevron-right"></i></button>
         </div>
       </div>
     </section>
 
     <!-- RSVP -->
-    <section class="aos card rsvp" style="padding:16px 16px 18px;">
+    <section class="aos card rsvp tap" style="padding:16px 16px 18px;" id="rsvp">
       <h2>Confirmar asistencia</h2>
       <p class="subtitle">Por favor confirma tu asistencia un mes antes del evento. ¡Gracias!</p>
 
@@ -248,7 +257,7 @@
           </select>
         </div>
         <div class="btns">
-          <button type="submit" class="btn" id="btnWA"><i class="bi bi-whatsapp"></i> Confirmar por WhatsApp</button>
+          <button type="submit" class="btn tap" id="btnWA"><i class="bi bi-whatsapp"></i> Confirmar por WhatsApp</button>
         </div>
         <small>También puedes llamar a
           <a href="tel:+50254389207">+502 5438 9207</a>.
@@ -256,7 +265,7 @@
       </form>
     </section>
 
-    <section class="aos" style="text-align:center; color:var(--muted); padding-bottom:56px;">
+    <section class="aos tap" style="text-align:center; color:var(--muted); padding-bottom:56px;">
       <p>Con cariño,</p>
       <p class="script" style="margin-top:-6px">Escobar</p>
     </section>
@@ -264,9 +273,15 @@
 
   <!-- Botón flotante música -->
   <div class="music">
-    <button class="btn" id="musicToggle" aria-pressed="false" aria-label="Reproducir música">
+    <button class="btn tap" id="musicToggle" aria-pressed="false" aria-label="Reproducir música">
       <i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>
     </button>
+  </div>
+
+  <!-- Overlay visor de imagen -->
+  <div id="lightbox" style="position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:60;">
+    <img id="lightboxImg" src="" alt="Foto" style="max-width:92vw;max-height:86vh;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)"/>
+    <button id="lightboxClose" aria-label="Cerrar" style="position:absolute;top:14px;right:14px;background:#ffffff22;border:none;color:#fff;width:44px;height:44px;border-radius:50%;display:grid;place-items:center"><i class="bi bi-x-lg"></i></button>
   </div>
 
   <!-- Datos estructurados para mejor previsualización/SEO -->
@@ -281,18 +296,8 @@
     "image":["./assets/img/portada.jpg"],
     "description":"Celebración de XV años con ceremonia y recepción.",
     "subEvent":[
-      {
-        "@type":"Event",
-        "name":"Misa de XV",
-        "startDate":"2025-11-30T18:00:00-06:00",
-        "location":{"@type":"Place","name":"Iglesia Retalhuleu","address":"Parque central de Retalhuleu"}
-      },
-      {
-        "@type":"Event",
-        "name":"Recepción XV",
-        "startDate":"2025-11-30T20:00:00-06:00",
-        "location":{"@type":"Place","name":"Salón de eventos Las Morenas","address":"Salón de eventos Las Morenas"}
-      }
+      {"@type":"Event","name":"Misa de XV","startDate":"2025-11-30T18:00:00-06:00","location":{"@type":"Place","name":"Iglesia Retalhuleu","address":"Parque central de Retalhuleu"}},
+      {"@type":"Event","name":"Recepción XV","startDate":"2025-11-30T20:00:00-06:00","location":{"@type":"Place","name":"Salón de eventos Las Morenas","address":"Salón de eventos Las Morenas"}}
     ]
   }
   </script>
@@ -300,6 +305,19 @@
   <script>
     const $  = (s, el=document)=> el.querySelector(s);
     const $$ = (s, el=document)=> [...el.querySelectorAll(s)];
+
+    /* Ripple + vibración ligera en taps */
+    function addRipple(el){
+      el.addEventListener('pointerdown', ev=>{
+        try{ navigator.vibrate?.(8); }catch(_){}
+        const r=document.createElement('span'); r.className='ripple';
+        const rect=el.getBoundingClientRect();
+        r.style.left=(ev.clientX-rect.left)+'px';
+        r.style.top =(ev.clientY-rect.top )+'px';
+        el.appendChild(r); setTimeout(()=>r.remove(),600);
+      });
+    }
+    $$('.tap').forEach(addRipple);
 
     // Autoplay al primer toque/click (respetando reduced motion)
     document.addEventListener('DOMContentLoaded', () => {
@@ -319,7 +337,7 @@
     }, {threshold:.15});
     $$('.aos').forEach(el=> io.observe(el));
 
-    // Countdown (usa fecha del data-attribute con offset explícito -06:00)
+    // Countdown
     (function(){
       const root = $('#app');
       const dtStr = root.getAttribute('data-event-datetime');
@@ -340,9 +358,18 @@
         $('#s').textContent = pad(s);
       }
       tick(); setInterval(tick,1000);
+
+      // Click en el contador: muestra fecha exacta
+      $('#countdown').addEventListener('click', ()=>{
+        const dt = new Date(dtStr).toLocaleString('es-GT',{ dateStyle:'full', timeStyle:'short' });
+        alert('Evento: ' + dt);
+      });
     })();
 
-    // Carrusel con teclado
+    // Hero clicable: hace scroll a la invitación
+    $('.hero')?.addEventListener('click', ()=> document.getElementById('intro')?.scrollIntoView({behavior:'smooth'}));
+
+    // Carrusel con teclado + navegación
     (function(){
       const track = $('#track');
       const by = ()=> track.clientWidth;
@@ -352,6 +379,20 @@
         if(e.key==='ArrowLeft') track.scrollBy({left:-by(), behavior:'smooth'});
         if(e.key==='ArrowRight') track.scrollBy({left: by(), behavior:'smooth'});
       });
+    })();
+
+    // Lightbox de imágenes
+    (function(){
+      const lb = $('#lightbox');
+      const img = $('#lightboxImg');
+      const close = $('#lightboxClose');
+      $$('.img-zoom').forEach(ph=>{
+        ph.addEventListener('click', ()=>{ img.src=ph.src; lb.style.display='flex'; });
+      });
+      function hide(){ lb.style.display='none'; img.src=''; }
+      close.addEventListener('click', hide);
+      lb.addEventListener('click', (e)=>{ if(e.target===lb) hide(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hide(); });
     })();
 
     // Música (toggle); pausa si se reproduce el mensaje de voz
@@ -376,22 +417,37 @@
       }
       musicBtn.addEventListener('click', toggleMusic);
 
-      // Pausar música al reproducir nota de voz
       const voiceNote = $('#voiceNote');
-      voiceNote.addEventListener('play', ()=>{ if(musicPlaying){ bgMusic.pause(); musicPlaying=false; musicBtn.setAttribute('aria-pressed','false'); musicBtn.innerHTML='<i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>'; }});
+      voiceNote.addEventListener('play', ()=>{
+        if(musicPlaying){
+          bgMusic.pause(); musicPlaying=false;
+          musicBtn.setAttribute('aria-pressed','false');
+          musicBtn.innerHTML='<i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>';
+        }
+      });
     })();
 
-    // Mensaje de voz accesible
+    // Mensaje de voz
     (function(){
       const voiceBtn  = $('#btnVoice');
       const voiceNote = $('#voiceNote');
       let voicePlaying=false;
       voiceBtn.addEventListener('click', ()=>{
         if(!voiceNote.src){ alert('Agrega un audio en ./assets/audio/mensaje.mp3'); return; }
-        if(voicePlaying){ voiceNote.pause(); voiceNote.currentTime=0; voicePlaying=false; voiceBtn.setAttribute('aria-pressed','false'); voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; }
-        else { voiceNote.play(); voicePlaying=true; voiceBtn.setAttribute('aria-pressed','true'); voiceBtn.innerHTML='<i class="bi bi-stop-fill"></i> Detener audio'; }
+        if(voicePlaying){
+          voiceNote.pause(); voiceNote.currentTime=0; voicePlaying=false;
+          voiceBtn.setAttribute('aria-pressed','false');
+          voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación';
+        }else{
+          voiceNote.play(); voicePlaying=true;
+          voiceBtn.setAttribute('aria-pressed','true');
+          voiceBtn.innerHTML='<i class="bi bi-stop-fill"></i> Detener audio';
+        }
       });
-      voiceNote.addEventListener('ended', ()=>{ voicePlaying=false; voiceBtn.setAttribute('aria-pressed','false'); voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; });
+      voiceNote.addEventListener('ended', ()=>{
+        voicePlaying=false; voiceBtn.setAttribute('aria-pressed','false');
+        voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación';
+      });
     })();
 
     // RSVP WhatsApp
