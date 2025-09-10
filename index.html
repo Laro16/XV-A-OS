@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Invitación XV — Plantilla Responsive</title>
   <meta name="description" content="Invitación elegante optimizada para celular con cuenta regresiva, galería, mapa, RSVP por WhatsApp y audio.">
+  <meta name="theme-color" content="#c6a664" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="¡Te invito a mis XV!" />
+  <meta property="og:description" content="Cuenta regresiva, galería, mapa y confirmación por WhatsApp." />
+  <meta property="og:image" content="./assets/img/portada.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Tipografías -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,28 +61,37 @@
     .wrap{ width:100%; max-width:720px; margin-inline:auto; padding-inline:16px; }
     .card{ background:var(--card); backdrop-filter: blur(8px); border-radius:var(--radius); box-shadow:var(--shadow); }
 
+    /* HERO */
     .hero{
       position:relative; overflow:hidden; border-radius:0 0 32px 32px;
       min-height: 64vh;
       display:flex; align-items:flex-end;
       background-image: var(--hero-image);
       background-size: cover; background-position: center;
+      padding-bottom: 22px;
     }
     .hero .portrait{
       position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       filter: contrast(1.05) saturate(1.05);
     }
+
+    /* Monograma más ligero y 100% circular */
     .monogram{
       position:relative; z-index:2;
-      width:210px; height:210px; margin:0 auto -22px;
+      width: min(42vw, 160px);
+      aspect-ratio: 1 / 1;
+      margin:0 auto -18px;
       border-radius:50%; display:grid; place-items:center; color:#fff; text-align:center;
-      background: radial-gradient(120px 120px at center, rgba(198,166,100,.95), rgba(169,144,79,.95));
-      box-shadow:0 12px 30px rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.35);
+      background: radial-gradient(100px 100px at center,
+                  rgba(198,166,100,.90), rgba(169,144,79,.90));
+      box-shadow:0 10px 26px rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.35);
     }
     .monogram .small{font:600 14px/1 'Poppins',sans-serif; letter-spacing:.2em}
-    .monogram .big{font:400 46px/1 'Great Vibes', cursive}
+    .monogram .big{font:400 44px/1 'Great Vibes', cursive}
 
-    .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 24px; color:#fff; font-weight:600; }
+    /* Contador */
+    .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 20px; color:#fff; font-weight:600; }
     .countdown .item{ flex:1; text-align:center; background:rgba(0,0,0,.4); border-radius:14px; padding:10px 6px; }
     .countdown .num{ font-size:24px; display:block; }
     .countdown .lbl{ font-size:12px; opacity:.9; letter-spacing:.03em }
@@ -110,11 +127,16 @@
 
     .divider{ height:1px; background:linear-gradient(to right, transparent, #00000020 15%, #00000020 85%, transparent); margin:8px 0 16px; }
 
+    /* Accesibilidad */
+    :focus-visible{ outline:3px solid var(--primary); outline-offset:2px }
+
     @media(min-width:700px){
       .grid{ grid-template-columns: 1fr 1fr; }
       .countdown .num{ font-size:28px }
-      .monogram{ width:220px; height:220px }
+      .monogram{ width:200px; }
     }
+
+    @media (prefers-reduced-motion: reduce){ .aos{ transition:none } }
   </style>
 </head>
 <body>
@@ -122,10 +144,11 @@
   <audio id="bgMusic" src="./assets/audio/musica.mp3" loop preload="auto"></audio>
   <audio id="voiceNote" src="./assets/audio/mensaje.mp3" preload="auto"></audio>
 
-  <main class="wrap" id="app" data-event-datetime="2025-11-30T20:00">
+  <!-- data-event-datetime ahora incluye offset -06:00 (Guatemala). -->
+  <main class="wrap" id="app" data-event-datetime="2025-11-30T20:00-06:00">
     <!-- HERO -->
     <header class="hero">
-      <img class="portrait" src="./assets/img/portada.jpg" alt="Retrato de la quinceañera" onerror="this.style.display='none'"/>
+      <img class="portrait" src="./assets/img/portada.jpg" alt="Retrato de la quinceañera" loading="eager" fetchpriority="high" onerror="this.style.display='none'"/>
       <div class="monogram" aria-label="Monograma">
         <div>
           <div class="small">XV</div>
@@ -146,13 +169,13 @@
       <p>Hay momentos en la vida que siempre vamos a recordar. Me encantará compartir este día contigo.</p>
       <p class="script">Ariadne Reyes</p>
       <div class="btns" style="justify-content:center; margin-top:10px;">
-        <button class="btn ghost" id="btnVoice"><i class="bi bi-mic-fill"></i> Escuchar invitación</button>
+        <button class="btn ghost" id="btnVoice" aria-pressed="false"><i class="bi bi-mic-fill"></i> Escuchar invitación</button>
       </div>
     </section>
 
     <!-- DÓNDE & CUÁNDO -->
     <section class="aos">
-      <h2>Dónde & Cuándo</h2>
+      <h2>Dónde &amp; Cuándo</h2>
       <p class="subtitle">Acompáñame en la ceremonia y la recepción.</p>
       <div class="grid">
         <!-- CEREMONIA -->
@@ -165,7 +188,8 @@
             <div class="meta"><strong>Dirección:</strong> Parque central de Retalhuleu</div>
             <div class="btns">
               <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/Eoam4KMmS7f39aFc7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
-              <button class="btn addcal" data-title="Misa de XV" data-location="Parque central de Retalhuleu" data-duration="PT60M"><i class="bi bi-calendar-plus"></i> Agendar</button>
+              <!-- Botón con hora específica -->
+              <button class="btn addcal" data-title="Misa de XV" data-location="Parque central de Retalhuleu" data-start="2025-11-30T18:00-06:00" data-duration="PT60M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
           </div>
         </article>
@@ -173,13 +197,13 @@
         <article class="card place">
           <img src="./assets/img/recepcion.png" alt="Foto del salón de la recepción" loading="lazy">
           <div style="padding:12px 14px 16px;">
-            <h3>Salon de eventos, Las Morenas</h3>
+            <h3>Salón de eventos Las Morenas</h3>
             <div class="meta">Sábado 30 de Noviembre, 8:00 pm</div>
             <div class="divider"></div>
-            <div class="meta"><strong>Dirección:</strong> Salon de eventos Las Morenas</div>
+            <div class="meta"><strong>Dirección:</strong> Salón de eventos Las Morenas</div>
             <div class="btns">
-              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/B3KwMzobw1izasHU7"></i> Ver mapa</a>
-              <button class="btn addcal" data-title="Recepción XV" data-location="Hacienda de los Morales, Nuevo San Carlos" data-duration="PT240M"><i class="bi bi-calendar-plus"></i> Agendar</button>
+              <a class="btn ghost" target="_blank" rel="noopener" href="https://maps.app.goo.gl/B3KwMzobw1izasHU7"><i class="bi bi-geo-alt-fill"></i> Ver mapa</a>
+              <button class="btn addcal" data-title="Recepción XV" data-location="Salón de eventos Las Morenas" data-start="2025-11-30T20:00-06:00" data-duration="PT240M"><i class="bi bi-calendar-plus"></i> Agendar</button>
             </div>
           </div>
         </article>
@@ -191,11 +215,11 @@
       <h2>Mis Fotos</h2>
       <p class="subtitle">Desliza para ver la galería</p>
       <div class="card carousel">
-        <div class="track" id="track">
-          <img src="./assets/img/portada.jpg" alt="Foto 1">
-          <img src="./assets/img/foto1.jpg"  alt="Foto 2">
-          <img src="./assets/img/foto2.jpg"  alt="Foto 3">
-          <img src="./assets/img/recepcion.png" alt="Foto 4">
+        <div class="track" id="track" tabindex="0" aria-label="Carrusel de fotos" aria-roledescription="carrusel">
+          <img src="./assets/img/portada.jpg" alt="Foto 1 de la quinceañera">
+          <img src="./assets/img/foto1.jpg"  alt="Foto 2 de la quinceañera">
+          <img src="./assets/img/foto2.jpg"  alt="Foto 3 de la quinceañera">
+          <img src="./assets/img/recepcion.png" alt="Foto 4, salón de la recepción">
         </div>
         <div class="nav" aria-hidden="true">
           <button id="prev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
@@ -209,8 +233,8 @@
       <h2>Confirmar asistencia</h2>
       <p class="subtitle">Por favor confirma tu asistencia un mes antes del evento. ¡Gracias!</p>
 
-      <!-- Número sin + ni espacios; si requiere prefijo usa ej. 50254389207 -->
-      <form id="rsvpForm" data-whatsapp="54389207">
+      <!-- Recomendado: número en formato internacional sin +. Guatemala = 502 -->
+      <form id="rsvpForm" data-whatsapp="50254389207">
         <div class="field"><input required type="text" name="nombre" placeholder="Tu nombre completo" autocomplete="name"></div>
         <div class="field">
           <select name="acompanantes" aria-label="Acompañantes">
@@ -224,7 +248,7 @@
           <button type="submit" class="btn" id="btnWA"><i class="bi bi-whatsapp"></i> Confirmar por WhatsApp</button>
         </div>
         <small>También puedes llamar a
-          <a href="tel:+54389207">54 38 92 07</a>.
+          <a href="tel:+50254389207">+502 5438 9207</a>.
         </small>
       </form>
     </section>
@@ -242,9 +266,49 @@
     </button>
   </div>
 
+  <!-- Datos estructurados para mejor previsualización/SEO -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Event",
+    "name":"XV de Ariadne Reyes",
+    "startDate":"2025-11-30T20:00:00-06:00",
+    "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus":"https://schema.org/EventScheduled",
+    "image":["./assets/img/portada.jpg"],
+    "description":"Celebración de XV años con ceremonia y recepción.",
+    "subEvent":[
+      {
+        "@type":"Event",
+        "name":"Misa de XV",
+        "startDate":"2025-11-30T18:00:00-06:00",
+        "location":{"@type":"Place","name":"Iglesia Retalhuleu","address":"Parque central de Retalhuleu"}
+      },
+      {
+        "@type":"Event",
+        "name":"Recepción XV",
+        "startDate":"2025-11-30T20:00:00-06:00",
+        "location":{"@type":"Place","name":"Salón de eventos Las Morenas","address":"Salón de eventos Las Morenas"}
+      }
+    ]
+  }
+  </script>
+
   <script>
     const $  = (s, el=document)=> el.querySelector(s);
     const $$ = (s, el=document)=> [...el.querySelectorAll(s)];
+
+    // Autoplay opcional: al primer toque/click (saltará si el usuario prefiere reducir movimiento)
+    document.addEventListener('DOMContentLoaded', () => {
+      const startMusic = () => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        document.getElementById('musicToggle')?.click();
+        document.removeEventListener('click', startMusic);
+        document.removeEventListener('touchstart', startMusic);
+      };
+      document.addEventListener('click', startMusic, {once:true});
+      document.addEventListener('touchstart', startMusic, {once:true});
+    });
 
     // Animaciones on-scroll
     const io = new IntersectionObserver(ents=>{
@@ -252,7 +316,7 @@
     }, {threshold:.15});
     $$('.aos').forEach(el=> io.observe(el));
 
-    // Countdown
+    // Countdown con fecha local (-06:00)
     (function(){
       const root = $('#app');
       const dtStr = root.getAttribute('data-event-datetime');
@@ -275,14 +339,19 @@
       tick(); setInterval(tick,1000);
     })();
 
-    // Carrusel
+    // Carrusel + teclado
     (function(){
       const track = $('#track');
-      $('#prev')?.addEventListener('click', ()=> track.scrollBy({left:-track.clientWidth, behavior:'smooth'}));
-      $('#next')?.addEventListener('click', ()=> track.scrollBy({left: track.clientWidth, behavior:'smooth'}));
+      const by = ()=> track.clientWidth;
+      $('#prev')?.addEventListener('click', ()=> track.scrollBy({left:-by(), behavior:'smooth'}));
+      $('#next')?.addEventListener('click', ()=> track.scrollBy({left: by(), behavior:'smooth'}));
+      track?.addEventListener('keydown', (e)=>{
+        if(e.key==='ArrowLeft') track.scrollBy({left:-by(), behavior:'smooth'});
+        if(e.key==='ArrowRight') track.scrollBy({left: by(), behavior:'smooth'});
+      });
     })();
 
-    // Música (toggle)
+    // Música (toggle) + pausa automática si suena la nota de voz
     (function(){
       const bgMusic = $('#bgMusic');
       const musicBtn = $('#musicToggle');
@@ -303,19 +372,22 @@
         }catch(e){}
       }
       musicBtn.addEventListener('click', toggleMusic);
+
+      const voiceNote = $('#voiceNote');
+      voiceNote.addEventListener('play', ()=>{ if(musicPlaying){ bgMusic.pause(); musicPlaying=false; musicBtn.setAttribute('aria-pressed','false'); musicBtn.innerHTML='<i class="bi bi-music-note-beamed"></i><span style="margin-left:6px">Música</span>'; }});
     })();
 
-    // Mensaje de voz
+    // Mensaje de voz accesible
     (function(){
       const voiceBtn  = $('#btnVoice');
       const voiceNote = $('#voiceNote');
       let voicePlaying=false;
       voiceBtn.addEventListener('click', ()=>{
         if(!voiceNote.src){ alert('Agrega un audio en ./assets/audio/mensaje.mp3'); return; }
-        if(voicePlaying){ voiceNote.pause(); voiceNote.currentTime=0; voicePlaying=false; voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; }
-        else { voiceNote.play(); voicePlaying=true; voiceBtn.innerHTML='<i class="bi bi-stop-fill"></i> Detener audio'; }
+        if(voicePlaying){ voiceNote.pause(); voiceNote.currentTime=0; voicePlaying=false; voiceBtn.setAttribute('aria-pressed','false'); voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; }
+        else { voiceNote.play(); voicePlaying=true; voiceBtn.setAttribute('aria-pressed','true'); voiceBtn.innerHTML='<i class="bi bi-stop-fill"></i> Detener audio'; }
       });
-      voiceNote.addEventListener('ended', ()=>{ voicePlaying=false; voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; });
+      voiceNote.addEventListener('ended', ()=>{ voicePlaying=false; voiceBtn.setAttribute('aria-pressed','false'); voiceBtn.innerHTML='<i class="bi bi-mic-fill"></i> Escuchar invitación'; });
     })();
 
     // RSVP WhatsApp
@@ -338,11 +410,11 @@
         const fecha  = new Date(dtStr).toLocaleString('es-MX',{ dateStyle:'full', timeStyle:'short' });
         const msg    = `Hola, soy ${nombre}. Confirmo asistencia a los XV el ${fecha}. Acompañantes: ${acomp}.`;
         const url    = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-        window.open(url, '_blank');
+        window.open(url, '_blank', 'noopener');
       });
     })();
 
-    // Agregar a calendario (.ics)
+    // Agregar a calendario (.ics) — ahora por evento con data-start
     (function(){
       function addMinutes(date, m){ const d=new Date(date); d.setMinutes(d.getMinutes()+m); return d; }
       function formatICS(dt){ const p=n=>String(n).padStart(2,'0'); return `${dt.getUTCFullYear()}${p(dt.getUTCMonth()+1)}${p(dt.getUTCDate())}T${p(dt.getUTCHours())}${p(dt.getUTCMinutes())}${p(dt.getUTCSeconds())}Z`; }
@@ -356,7 +428,7 @@
           const title=btn.dataset.title||'Evento';
           const place=btn.dataset.location||'';
           const mins = Number(/PT(\d+)M/.exec(btn.dataset.duration||'PT120M')?.[1]||120);
-          const start=$('#app').getAttribute('data-event-datetime');
+          const start=btn.dataset.start || $('#app').getAttribute('data-event-datetime');
           downloadICS({title, description:'Te esperamos ❤', location:place, start, durationMinutes:mins});
         });
       });
@@ -364,7 +436,3 @@
   </script>
 </body>
 </html>
-
-
-
-
