@@ -39,6 +39,8 @@
       --bg-image: url("./assets/img/portada.jpg");
       --bg-blend: soft-light;
       --hero-image: url("./assets/img/portada.jpg");
+      --primary-rgb:198,166,100; /* para transparencias */
+      --countdown-h: 78px; /* altura fija para los 4 cuadros */
     }
 
     *{box-sizing:border-box}
@@ -77,21 +79,22 @@
 
     /* Monograma */
     .monogram{
-      position:relative; z-index:2;
+      position:absolute; left:50%; bottom: calc(var(--countdown-h) + 8px); transform:translateX(-50%);
+      z-index:2;
       width: min(42vw, 160px);
-      aspect-ratio: 1 / 1; 
-      margin:0 auto -18px; 
+      aspect-ratio: 1 / 1;
+      margin:0;
       border-radius:50%; display:grid; place-items:center; color:#fff; text-align:center;
-      background: radial-gradient(100px 100px at center,
-                  rgba(198,166,100,.90), rgba(169,144,79,.90));
+      background: radial-gradient(100px 100px at center, rgba(198,166,100,.82), rgba(169,144,79,.82));
       box-shadow:0 10px 26px rgba(0,0,0,.22);
       border:1px solid rgba(255,255,255,.35);
+      backdrop-filter: saturate(1.1) blur(1px);
     }
     .monogram .small{font:600 14px/1 'Poppins',sans-serif; letter-spacing:.2em}
     .monogram .big{font:400 44px/1 'Great Vibes', cursive}
 
     /* Contador */
-    .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 20px; color:#fff; font-weight:600; }
+    .countdown{ position:relative; z-index:2; display:flex; justify-content:space-between; gap:10px; padding:14px 12px 20px; color:#fff; font-weig
     .countdown .item{ flex:1; text-align:center; background:rgba(0,0,0,.4); border-radius:14px; padding:10px 6px; }
     .countdown .num{ font-size:24px; display:block; }
     .countdown .lbl{ font-size:12px; opacity:.9; letter-spacing:.03em }
